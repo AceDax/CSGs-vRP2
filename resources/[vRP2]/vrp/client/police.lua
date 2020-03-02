@@ -26,7 +26,7 @@ function Police:__construct()
     while true do
       Citizen.Wait(0)
       if self.handcuffed then
-        SetPedStealthMovement(GetPlayerPed(-1),true,"")
+        --SetPedStealthMovement(GetPlayerPed(-1),true,"")
         DisableControlAction(0,21,true) -- disable sprint
         DisableControlAction(0,24,true) -- disable attack
         DisableControlAction(0,25,true) -- disable aim
@@ -50,6 +50,10 @@ function Police:__construct()
         DisableControlAction(0,270,true)
         DisableControlAction(0,35,true) -- disable move right
         DisableControlAction(0,271,true)
+        DisableControlAction(0,71,true) -- vehicle W
+        DisableControlAction(0,72,true) -- vehicle S
+        DisableControlAction(0,36,true) -- disable take cover
+        DisableControlAction(2,289,true) -- Phone
       end
     end
   end)
@@ -69,6 +73,24 @@ function Police:__construct()
       end
     end
   end)
+
+  -- task: attach 
+  Citizen.CreateThread(function()
+    while true do
+      Citizen.Wait(5)
+      if self.attach_player and not self.follow_player then
+        local tplayer = GetPlayerFromServerId(self.attach_player)
+        local ped = GetPlayerPed(-1)
+        if NetworkIsPlayerConnected(tplayer) then
+          local tped = GetPlayerPed(tplayer)
+          --vRP.EXT.Base:notify(ped, "~b~A player is attached")
+          Citizen.InvokeNative(0x6B9BBD38AB0796DF, ped, tped, 4103, 11816, 0.50, 0.0, 0.1, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
+          --TaskGoToEntity(ped, tped, -1, 1.0, 10.0, 1073741824.0, 0)
+          --SetPedKeepTask(ped, true)
+        end
+      end
+    end
+  end) 
 
   -- task: jail
   Citizen.CreateThread(function()
@@ -198,6 +220,24 @@ function Police:getFollowedPlayer()
   return self.follow_player
 end
 
+-- ATTACH
+
+-- follow another player
+-- player: nil to disable
+function Police:attachPlayer(player)
+  self.attach_player = player
+
+  if not player then -- unfollow
+	DetachEntity(GetPlayerPed(-1), true, false)
+    --ClearPedTasks(GetPlayerPed(-1))
+  end
+end
+
+-- return player or nil if not following anyone
+function Police:getAttachedPlayer()
+  return self.attach_player
+end
+
 -- JAIL
 
 -- jail the player in a no-top no-bottom cylinder 
@@ -239,6 +279,8 @@ Police.tunnel.isHandcuffed = Police.isHandcuffed
 Police.tunnel.putInNearestVehicleAsPassenger = Police.putInNearestVehicleAsPassenger
 Police.tunnel.followPlayer = Police.followPlayer
 Police.tunnel.getFollowedPlayer = Police.getFollowedPlayer
+Police.tunnel.attachPlayer = Police.attachPlayer
+Police.tunnel.getAttachedPlayer = Police.getAttachedPlayer
 Police.tunnel.jail = Police.jail
 Police.tunnel.unjail = Police.unjail
 Police.tunnel.isJailed = Police.isJailed

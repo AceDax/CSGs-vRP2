@@ -97,6 +97,7 @@ end
 function PoI:unload()
   if self.blip then
     RemoveBlip(self.blip)
+    -- SetBlipSprite(self.blip, 29)
   end
 end
 
@@ -164,6 +165,7 @@ end
 function PlayerMark:unload()
   if self.blip then
     RemoveBlip(self.blip)
+    -- SetBlipSprite(self.blip, 29)
   end
 end
 

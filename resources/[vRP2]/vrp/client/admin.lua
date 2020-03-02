@@ -8,7 +8,7 @@ function Admin:__construct()
   vRP.Extension.__construct(self)
 
   self.noclip = false
-  self.noclip_speed = 1.0
+  self.noclip_speed = 2.0
 
   -- noclip task
   Citizen.CreateThread(function()

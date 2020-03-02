@@ -132,6 +132,12 @@ function Garage:spawnVehicle(model, state, position, rotation)
       self:setVehicleState(nveh, state)
     end
 
+    if state.condition then
+      TriggerServerEvent("fuel:UpdateServerFuelTable", vRP.EXT.Identity.registration, mhash, state.condition.fuel_level)
+    else
+      TriggerServerEvent("fuel:UpdateServerFuelTable", vRP.EXT.Identity.registration, mhash, 77)
+    end
+
     vRP:triggerEvent("garageVehicleSpawn", model)
   end
 end
@@ -273,6 +279,28 @@ function Garage:getNearestOwnedVehicle(radius)
   self:tryOwnVehicles() -- get back network lost vehicles
 
   local px,py,pz = vRP.EXT.Base:getPosition()
+  local min_dist
+  local min_k
+  for k,veh in pairs(self.vehicles) do
+    local x,y,z = table.unpack(GetEntityCoords(veh,true))
+    local dist = GetDistanceBetweenCoords(x,y,z,px,py,pz,true)
+
+    if dist <= radius+0.0001 then
+      if not min_dist or dist < min_dist then
+        min_dist = dist
+        min_k = k
+      end
+    end
+  end
+
+  return min_k
+end
+
+-- return model or nil 
+function Garage:getNearestOthersVehicle(radius, px, py ,pz)
+  self:cleanupVehicles()
+  self:tryOwnVehicles() -- get back network lost vehicles
+
   local min_dist
   local min_k
   for k,veh in pairs(self.vehicles) do
@@ -444,7 +472,8 @@ function Garage:getVehicleState(veh)
       health = GetEntityHealth(veh),
       engine_health = GetVehicleEngineHealth(veh),
       petrol_tank_health = GetVehiclePetrolTankHealth(veh),
-      dirt_level = GetVehicleDirtLevel(veh)
+      dirt_level = GetVehicleDirtLevel(veh),
+      fuel_level = GetVehicleFuelLevel(veh)	
     }
   }
 
@@ -497,6 +526,10 @@ function Garage:setVehicleState(veh, state)
 
     if state.condition.dirt_level then
       SetVehicleDirtLevel(veh, state.condition.dirt_level)
+    end
+
+    if state.condition.fuel_level then
+      SetVehicleFuelLevel(veh, state.condition.fuel_level)
     end
 
     if state.condition.windows then
@@ -602,10 +635,12 @@ function Garage:vc_toggleLock(model)
       SetVehicleDoorsLockedForAllPlayers(veh, false)
       SetVehicleDoorsLocked(veh,1)
       SetVehicleDoorsLockedForPlayer(veh, PlayerId(), false)
+      vRP.EXT.Base:notify("Vehicle unlocked.")
       return false
     else -- lock
       SetVehicleDoorsLocked(veh,2)
       SetVehicleDoorsLockedForAllPlayers(veh, true)
+      vRP.EXT.Base:notify("Vehicle locked.")
       return true
     end
   end
@@ -655,6 +690,8 @@ Garage.tunnel.despawnVehicle = Garage.despawnVehicle
 Garage.tunnel.despawnVehicles = Garage.despawnVehicles
 Garage.tunnel.fixNearestVehicle = Garage.fixNearestVehicle
 Garage.tunnel.replaceNearestVehicle = Garage.replaceNearestVehicle
+Garage.tunnel.getNearestOthersVehicle = Garage.getNearestOthersVehicle
+
 Garage.tunnel.getNearestOwnedVehicle = Garage.getNearestOwnedVehicle
 Garage.tunnel.getAnyOwnedVehiclePosition = Garage.getAnyOwnedVehiclePosition
 Garage.tunnel.getOwnedVehiclePosition = Garage.getOwnedVehiclePosition
