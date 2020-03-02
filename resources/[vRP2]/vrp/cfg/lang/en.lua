@@ -142,6 +142,21 @@ local lang = {
     -- weapon translation by GTA 5 weapon name (lower case)
     pistol = "Pistol"
   },
+  component = {
+    -- weapon translation by GTA 5 weapon name 
+    AT_PI_SUPP = "Pistol Silencer",
+    AT_AR_FLSH = "Rifle Flashlight",
+    AT_PI_FLSH = "Pistol Flashlight"
+  },  
+  tint = {
+    green = "Green",
+    gold = "Gold",
+    pink = "Pink",
+    army = "Army",
+    lspd = "LSPD",
+    orange = "Orange",
+    platinum = "Chrome plated"
+  },
   item = {
     medkit = {
       name = "Medical Kit",
@@ -175,6 +190,20 @@ local lang = {
       description = "Weapon body of {1}.",
       equip = {
         title = "Equip"
+      }
+    },
+    wcomp = {
+      name = "{1} Component",
+      description = "Component {1}.",
+      equip = {
+      title = "Equip"
+      }
+    },    
+    wtint = {
+      name = "Tint {1}",
+      description = "Color {1}.",
+      equip = {
+      title = "Paint"
       }
     },
     wammo = {
