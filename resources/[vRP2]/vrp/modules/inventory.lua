@@ -159,8 +159,13 @@ local function menu_inventory_item(self)
 
       if nuser:tryGiveItem(fullid,amount,true) then
         if user:tryTakeItem(fullid,amount,true) then
-          user:tryTakeItem(fullid, amount)
-          nuser:tryGiveItem(fullid, amount)
+          if fullid == "gift" then
+            user:tryTakeItem(fullid, amount)
+            nuser:tryGiveItem("gift2", amount)
+          else
+            user:tryTakeItem(fullid, amount)
+            nuser:tryGiveItem(fullid, amount)
+          end
 
           if user:getItemAmount(fullid) > 0 then
             user:actualizeMenu()

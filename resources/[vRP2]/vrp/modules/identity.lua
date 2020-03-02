@@ -207,7 +207,7 @@ function Identity:generateRegistrationNumber()
   local registration = ""
   -- generate registration number
   repeat
-    registration = Identity.generateStringNumber("DDDLLL")
+    registration = Identity.generateStringNumber("DDLLLDDD")
     character_id = self:getByRegistration(registration)
   until not character_id
 

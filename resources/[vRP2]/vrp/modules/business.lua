@@ -59,28 +59,28 @@ local function menu_commerce_chamber(self)
     end
   end
 
-  local function m_launder(menu)
-    local user = menu.user
+  -- local function m_launder(menu)
+  --   local user = menu.user
 
-    local business = self:getBusiness(user.cid) -- update business data
-    -- compute launder capacity
-    local launder_left = math.min(business.capital-business.laundered,user:getItemAmount("dirty_money")) 
-    local amount = parseInt(user:prompt(lang.business.launder.prompt({launder_left}),""..launder_left))
-    if amount > 0 and amount <= launder_left then
-      if user:tryTakeItem("dirty_money",amount,nil,true) then
-        -- add laundered amount
-        vRP:execute("vRP/add_laundered", {character_id = user.cid, laundered = amount})
-        -- give laundered money
-        user:giveWallet(amount)
-        vRP.EXT.Base.remote._notify(user.source,lang.business.launder.laundered({amount}))
-        user:actualizeMenu()
-      else
-        vRP.EXT.Base.remote._notify(user.source,lang.business.launder.not_enough())
-      end
-    else
-      vRP.EXT.Base.remote._notify(user.source,lang.common.invalid_value())
-    end
-  end
+  --   local business = self:getBusiness(user.cid) -- update business data
+  --   -- compute launder capacity
+  --   local launder_left = math.min(business.capital-business.laundered,user:getItemAmount("dirty_money")) 
+  --   local amount = parseInt(user:prompt(lang.business.launder.prompt({launder_left}),""..launder_left))
+  --   if amount > 0 and amount <= launder_left then
+  --     if user:tryTakeItem("dirty_money",amount,nil,true) then
+  --       -- add laundered amount
+  --       vRP:execute("vRP/add_laundered", {character_id = user.cid, laundered = amount})
+  --       -- give laundered money
+  --       user:giveWallet(amount)
+  --       vRP.EXT.Base.remote._notify(user.source,lang.business.launder.laundered({amount}))
+  --       user:actualizeMenu()
+  --     else
+  --       vRP.EXT.Base.remote._notify(user.source,lang.business.launder.not_enough())
+  --     end
+  --   else
+  --     vRP.EXT.Base.remote._notify(user.source,lang.common.invalid_value())
+  --   end
+  -- end
 
   local function m_open(menu)
     local user = menu.user
@@ -133,7 +133,7 @@ local function menu_commerce_chamber(self)
       menu:addOption(lang.business.addcapital.title(), m_add_capital, lang.business.addcapital.description())
 
       -- money laundered
-      menu:addOption(lang.business.launder.title(), m_launder, lang.business.launder.description())
+      -- menu:addOption(lang.business.launder.title(), m_launder, lang.business.launder.description())
     else -- doesn't have a business
       menu:addOption(lang.business.open.title(), m_open, lang.business.open.description({self.cfg.minimum_capital}))
     end
@@ -181,7 +181,7 @@ function Business:__construct()
   end)
 
   -- items
-  vRP.EXT.Inventory:defineItem("dirty_money", lang.item.dirty_money.name(), lang.item.dirty_money.description(), nil, 0)
+  -- vRP.EXT.Inventory:defineItem("dirty_money", lang.item.dirty_money.name(), lang.item.dirty_money.description(), nil, 0)
 
   -- menu
 

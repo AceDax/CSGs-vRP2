@@ -14,6 +14,11 @@ function Money.User:getWallet()
   return self.cdata.wallet
 end
 
+-- get debt amount
+function Money.User:getDebt()
+  return self.cdata.debt
+end
+
 -- get bank amount
 function Money.User:getBank()
   return self.cdata.bank
@@ -23,6 +28,14 @@ end
 function Money.User:setWallet(amount)
   if self.cdata.wallet ~= amount then
     self.cdata.wallet = amount
+    vRP:triggerEvent("playerMoneyUpdate", self)
+  end
+end
+
+-- set debt amount
+function Money.User:setDebt(amount)
+  if self.cdata.debt ~= amount then
+    self.cdata.debt = amount
     vRP:triggerEvent("playerMoneyUpdate", self)
   end
 end
@@ -38,6 +51,11 @@ end
 -- give money to bank
 function Money.User:giveBank(amount)
   self:setBank(self:getBank()+math.abs(amount))
+end
+
+-- give money to debt
+function Money.User:giveDebt(amount)
+  self:setDebt(self:getDebt()+math.abs(amount))
 end
 
 -- give money to wallet
@@ -71,6 +89,23 @@ function Money.User:tryWithdraw(amount, dry)
       self:giveWallet(amount)
     end
     return true
+  else
+    return false
+  end
+end
+
+--pay state debt
+function Money.User:tryPaydebt(amount, dry)
+  local debt = self:getDebt()
+  if amount >= 0 and debt >= amount then
+    if self:tryFullPayment(amount, dry) then
+      if not dry then
+        self:setDebt(debt-amount)
+      end
+      return true
+    else
+      return false
+    end
   else
     return false
   end
@@ -272,6 +307,10 @@ function Money.event:characterLoad(user)
 
   if not user.cdata.bank then
     user.cdata.bank = self.cfg.open_bank
+  end
+
+  if not user.cdata.debt then
+    user.cdata.debt = self.cfg.open_debt
   end
 
   vRP:triggerEvent("playerMoneyUpdate", user)

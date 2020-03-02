@@ -288,6 +288,29 @@ local function menu_police(self)
     end
   end
 
+  local function m_attach(menu)
+    local user = menu.user
+
+    local nuser
+    local nplayer = vRP.EXT.Base.remote.getNearestPlayer(user.source,10)
+    if nplayer then nuser = vRP.users_by_source[nplayer] end
+
+    if nuser then
+      local followed = self.remote.getAttachedPlayer(nuser.source)
+      if followed ~= user.source then -- drag
+        if self.remote.isHandcuffed(nuser.source) then  -- check handcuffed
+          self.remote._attachPlayer(nuser.source, user.source)
+        else
+          vRP.EXT.Base.remote._notify(user.source,lang.police.not_handcuffed())
+        end
+      else -- stop follow
+        self.remote._attachPlayer(nuser.source)
+      end
+    else
+      vRP.EXT.Base.remote._notify(user.source,lang.common.no_player_near())
+    end
+  end  
+
   local function m_putinveh(menu)
     local user = menu.user
 
@@ -357,6 +380,25 @@ local function menu_police(self)
       else
         vRP.EXT.Base.remote._notify(user.source,lang.police.not_handcuffed())
       end
+    else
+      vRP.EXT.Base.remote._notify(user.source,lang.common.no_player_near())
+    end
+  end
+
+  local function m_sniff(menu) -- for K9 units
+    local user = menu.user
+
+    local nuser
+    local nplayer = vRP.EXT.Base.remote.getNearestPlayer(user.source,5)
+    if nplayer then nuser = vRP.users_by_source[nplayer] end
+
+    if nuser then
+      --if self.remote.isHandcuffed(nuser.source) then  -- check handcuffed
+        user:openMenu("police.check", {tuser = nuser})
+        -- vRP.EXT.Base.remote._notify(nuser.source,lang.police.menu.check.checked())
+      -- else
+      --   vRP.EXT.Base.remote._notify(user.source,lang.police.not_handcuffed())
+      -- end
     else
       vRP.EXT.Base.remote._notify(user.source,lang.common.no_player_near())
     end
@@ -478,6 +520,11 @@ local function menu_police(self)
     end
   end
 
+  vRP.EXT.GUI:registerMenuBuilder("player", function(menu)
+    menu:addOption(lang.police.menu.getoutveh.title(), m_getoutveh, lang.police.menu.getoutveh.description())
+    menu:addOption(lang.police.menu.putinveh.title(), m_putinveh, lang.police.menu.putinveh.description())
+  end)
+
   vRP.EXT.GUI:registerMenuBuilder("police", function(menu)
     local user = menu.user
     menu.title = lang.police.title()
@@ -507,17 +554,21 @@ local function menu_police(self)
       menu:addOption(lang.police.menu.check.title(), m_check, lang.police.menu.check.description())
     end
 
+    if user:hasPermission("police.sniff") then
+      menu:addOption("Sniff", m_sniff, "Sniff the closest player for anything suspicious.")
+    end
+
     if user:hasPermission("police.seize") then
       menu:addOption(lang.police.menu.seize.title(), m_seize, lang.police.menu.seize.description())
     end
 
-    if user:hasPermission("police.jail") then
-      menu:addOption(lang.police.menu.jail.title(), m_jail, lang.police.menu.jail.description())
-    end
+    -- if user:hasPermission("police.jail") then
+    --   menu:addOption(lang.police.menu.jail.title(), m_jail, lang.police.menu.jail.description())
+    -- end
 
-    if user:hasPermission("police.fine") then
-      menu:addOption(lang.police.menu.fine.title(), m_fine, lang.police.menu.fine.description())
-    end
+    -- if user:hasPermission("police.fine") then
+    --   menu:addOption(lang.police.menu.fine.title(), m_fine, lang.police.menu.fine.description())
+    -- end
   end)
 end
 

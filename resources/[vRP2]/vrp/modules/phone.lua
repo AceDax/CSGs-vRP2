@@ -354,11 +354,11 @@ local function menu_phone(self)
     menu.title = lang.phone.title()
     menu.css.header_color = "rgba(0,125,255,0.75)"
 
-    menu:addOption(lang.phone.directory.title(), m_directory,lang.phone.directory.description())
-    menu:addOption(lang.phone.sms.title(), m_sms,lang.phone.sms.description())
-    menu:addOption(lang.phone.service.title(), m_service,lang.phone.service.description())
+    --menu:addOption(lang.phone.directory.title(), m_directory,lang.phone.directory.description())
+    --menu:addOption(lang.phone.sms.title(), m_sms,lang.phone.sms.description())
+    --menu:addOption(lang.phone.service.title(), m_service,lang.phone.service.description())
     menu:addOption(lang.phone.announce.title(), m_announce,lang.phone.announce.description())
-    menu:addOption(lang.phone.hangup.title(), m_hangup,lang.phone.hangup.description())
+    --menu:addOption(lang.phone.hangup.title(), m_hangup,lang.phone.hangup.description())
   end)
 end
 

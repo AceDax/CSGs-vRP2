@@ -59,6 +59,33 @@ function ATM:__construct()
     end
   end
 
+  local function atm_choice_Paydebt(menu)
+    local user = menu.user
+
+    play_atm_enter(user) --anim
+    local v = parseInt(user:prompt(lang.atm.state_debt.prompt(),""))
+    play_atm_exit(user)
+
+    if v > 0 then
+      if user:tryPaydebt(v) then
+        vRP.EXT.Base.remote._notify(user.source,lang.atm.state_debt.deposited({v}))
+        user:actualizeMenu()
+      else
+        vRP.EXT.Base.remote._notify(user.source,lang.money.not_enough())
+      end
+    else
+      vRP.EXT.Base.remote._notify(user.source,lang.common.invalid_value())
+    end
+  end
+
+  vRP.EXT.GUI:registerMenuBuilder("State Debt ATM", function(menu)
+    menu.title = lang.atm.title2()
+    menu.css.header_color="rgba(0,255,125,0.75)"
+
+    menu:addOption(lang.atm.info.title(), nil, lang.atm.info.debt({menu.user:getDebt()}))
+    menu:addOption(lang.atm.state_debt.title(),atm_choice_Paydebt,lang.atm.state_debt.description())
+  end)
+
 
   vRP.EXT.GUI:registerMenuBuilder("ATM", function(menu)
     menu.title = lang.atm.title()
@@ -81,6 +108,10 @@ function ATM.event:playerSpawn(user, first_spawn)
       menu = user:openMenu("ATM")
     end
 
+    local function enter2(user)
+      menu = user:openMenu("State Debt ATM")
+    end
+
     local function leave(user)
       user:closeMenu(menu)
     end
@@ -94,6 +125,17 @@ function ATM.event:playerSpawn(user, first_spawn)
       vRP.EXT.Map.remote._addEntity(user.source,ment[1],ment[2])
 
       user:setArea("vRP:atm:"..k,x,y,z,1,1.5,enter,leave)
+    end
+
+    for k,v in pairs(self.cfg.atms2) do
+      local x,y,z = table.unpack(v)
+
+      local ment = clone(self.cfg.atm_map_entity)
+      ment[2].title = lang.atm.title2()
+      ment[2].pos = {x,y,z-1}
+      vRP.EXT.Map.remote._addEntity(user.source,ment[1],ment[2])
+
+      user:setArea("vRP:atm:"..k,x,y,z,1,1.5,enter2,leave)
     end
   end
 end

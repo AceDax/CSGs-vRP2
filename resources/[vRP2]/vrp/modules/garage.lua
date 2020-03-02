@@ -46,10 +46,18 @@ end
 local function menu_garage_owned(self)
   local function m_get(menu, model)
     local user = menu.user
+    local veh = menu.data.vehicles[model]
+    local veh_name = veh[1]
 
     local vehicles = user:getVehicles()
 
-    if vehicles[model] == 1 then -- in
+    if vehicles[model] == 3 then -- impounded
+      vRP.EXT.Base.remote._notify(user.source, "~r~Your ~b~"..veh_name.." ~r~was impounded by the police")
+    elseif user:hasPermission("!in_vehicle") then
+      user:closeMenus()
+      user:openMenu("garage", menu.data)
+      vRP.EXT.Base.remote._notify(user.source, "~r~Cant spawn vehicle when already inside another vehicle")
+    elseif vehicles[model] == 1 then -- in
       local vstate = user:getVehicleState(model)
       local state = {
         customization = vstate.customization,
@@ -107,13 +115,34 @@ local function menu_garage_buy(self)
 
     -- buy vehicle
     local veh = menu.data.vehicles[model]
-    if veh and user:tryPayment(veh[2]) then
-      uvehicles[model] = 1
+    if user:request(lang.garage.buy.yesbuy({veh[2]}), 15) then
+      if veh and user:tryFullPayment(veh[2]) then
+        uvehicles[model] = 1
 
-      vRP.EXT.Base.remote._notify(user.source, lang.money.paid({veh[2]}))
-      user:actualizeMenu()
-    else
-      vRP.EXT.Base.remote._notify(user.source, lang.money.not_enough())
+        vRP.EXT.Base.remote._notify(user.source, lang.money.paid({veh[2]}))
+        --user:actualizeMenu()
+        if user:hasPermission("!in_vehicle") then
+          user:closeMenus()
+          user:openMenu("garage", menu.data)
+          vRP.EXT.Base.remote._notify(user.source, "~r~Cant spawn vehicle when already inside another vehicle")
+        else
+          if uvehicles[model] == 1 then -- in
+            local vstate = user:getVehicleState(model)
+            local state = {
+              customization = vstate.customization,
+              condition = vstate.condition,
+              locked = vstate.locked
+            }
+      
+            uvehicles[model] = 0 -- mark as out
+            self.remote._spawnVehicle(user.source, model, state)
+            self.remote._setOutVehicles(user.source, {[model] = {}})
+            user:closeMenus()	
+          end
+        end
+      else
+        vRP.EXT.Base.remote._notify(user.source, lang.money.not_enough())
+      end
     end
   end
 
@@ -143,14 +172,17 @@ local function menu_garage_sell(self)
 
     local price = math.ceil(veh[2]*self.cfg.sell_factor)
 
-    if uvehicles[model] == 1 and not user.cdata.rent_vehicles[model] then -- has vehicle in, not rented
-      user:giveWallet(price)
-      uvehicles[model] = nil
+    if user:request(lang.garage.buy.yessell({price}), 15) then
 
-      vRP.EXT.Base.remote._notify(user.source,lang.money.received({price}))
-      user:actualizeMenu()
-    else
-      vRP.EXT.Base.remote._notify(user.source,lang.common.not_found())
+      if uvehicles[model] == 1 and not user.cdata.rent_vehicles[model] then -- has vehicle in, not rented
+        user:giveWallet(price)
+        uvehicles[model] = nil
+
+        vRP.EXT.Base.remote._notify(user.source,lang.money.received({price}))
+        user:actualizeMenu()
+      else
+        vRP.EXT.Base.remote._notify(user.source,lang.common.not_found())
+      end
     end
   end
 
@@ -272,7 +304,7 @@ local function menu_garage(self)
     menu:addOption(lang.garage.owned.title(), m_owned, lang.garage.owned.description())
     menu:addOption(lang.garage.buy.title(), m_buy, lang.garage.buy.description())
     menu:addOption(lang.garage.sell.title(), m_sell, lang.garage.sell.description())
-    menu:addOption(lang.garage.rent.title(), m_rent, lang.garage.rent.description())
+    -- menu:addOption(lang.garage.rent.title(), m_rent, lang.garage.rent.description())
     menu:addOption(lang.garage.store.title(), m_store, lang.garage.store.description())
   end)
 end
