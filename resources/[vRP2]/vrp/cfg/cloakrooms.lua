@@ -18,6 +18,10 @@ end
 ---- permissions (optional)
 ---- not_uniform (optional): if true, the cloakroom will take effect directly on the player, not as a uniform you can remove
 cfg.cloakroom_types = {
+
+  --=====|===================|=====--
+  --=====|Police Uniforms WIP|=====--
+  --=====|===================|=====--
   ["police"] = {
     _config = { permissions = {"police.cloakroom"}, map_entity = {"PoI", {marker_id = 1}} },
     ["Male uniform"] = {
@@ -37,6 +41,9 @@ cfg.cloakroom_types = {
       ["prop:2"] = {2,0}
     }
   },
+  --=====|============================|=====--
+  --=====|Fire Department Uniforms WIP|=====--
+  --=====|============================|=====--
   ["emergency"] = {
     _config = { permissions = {"emergency.cloakroom"}, map_entity = {"PoI", {marker_id = 1}} },
     ["Male uniform"] = {
@@ -49,6 +56,9 @@ cfg.cloakroom_types = {
       ["prop:6"] = {12,1}
     }
   },
+  --=====|===================|=====--
+  --=====|Prison Uniforms WIP|=====--
+  --=====|===================|=====--
   ["jail"] = {
     _config = { map_entity = {"PoI", {marker_id = 1}} },
     ["Male suit"] = {
@@ -59,6 +69,9 @@ cfg.cloakroom_types = {
       ["drawable:11"] = {5,0}
     }
   },
+  --=====|==============|=====--
+  --=====|PED models WIP|=====--
+  --=====|==============|=====--
   ["surgery"] = {
     _config = { not_uniform = true, map_entity = {"PoI", {marker_id = 1}} },
     ["Male"] = surgery_male,

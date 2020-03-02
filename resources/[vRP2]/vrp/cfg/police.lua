@@ -2,7 +2,7 @@
 local cfg = {}
 
 -- {ent,cfg} will fill cfg.pos, cfg.title
-cfg.pc_map_entity = {"PoI", {marker_id = 1}}
+cfg.pc_map_entity = {"PoI", {marker_id = 27}}
 
 -- PCs positions
 cfg.pcs = {
@@ -15,14 +15,14 @@ cfg.pcs = {
 cfg.trackveh = {
   min_time = 300, -- min time in seconds
   max_time = 600, -- max time in seconds
-  service = "police" -- service to alert when the tracking is successful
+  service = "911" -- service to alert when the tracking is successful
 }
 
 -- wanted display
 -- map_entity: {ent,cfg} will fill cfg.player (server id), cfg.title
 cfg.wanted = {
-  map_entity = {"PlayerMark", {blip_id = 458, blip_color = 38}},
-  service = "police"
+  map_entity = {"PlayerMark", {blip_id = 161, blip_color = 38}},
+  service = "911"
 }
 
 -- illegal items (seize)
@@ -31,7 +31,16 @@ cfg.seizable_items = {
   "dirty_money",
   "weed",
   "*wbody",
-  "*wammo"
+  "*wammo",
+  "stolen_credit",
+  "bank_money",
+  "weed_processed",
+  "edible|meth",
+  "edible|cocaine",
+  "methpipe",
+  "lockpick",
+  "upperR",
+  "lowerR",
 }
 
 -- jails {x,y,z,radius}

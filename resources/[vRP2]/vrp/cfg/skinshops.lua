@@ -5,20 +5,23 @@ local cfg = {}
 local cfg_clothing = {
   -- customization parts list {title, part}
   parts = {
+    {"Masks", "drawable:1"},
     {"Hats", "prop:0"},
-    {"Face", "drawable:1"},
-    {"Ears", "prop:2"},
     {"Glasses", "prop:1"},
+    {"Jacket", "drawable:11"},
+    {"Shirt", "drawable:8"},
+    {"Hands/Arms", "drawable:3"},
+    {"Legs", "drawable:4"},
+    {"Shoes", "drawable:6"},
+    {"Armor", "drawable:9"},
     {"Neck", "drawable:7"},
-    {"Hand", "drawable:3"},
+    {"Badges", "drawable:10"},
+    {"Ears", "prop:2"},
     {"Watches", "prop:6"},
     {"Bracelets", "prop:7"},
-    {"Shirt", "drawable:8"},
-    {"Jacket", "drawable:11"},
-    {"Legs", "drawable:4"},
-    {"Shoes", "drawable:6"}
+    {"Backpacks", "drawable:5"},
   },
-  map_entity = {"PoI", {blip_id = 73, blip_color = 3, marker_id = 1}}
+  map_entity = {"PoI", {marker_id = 27}}
 }
 
 local cfg_barber = {
@@ -39,7 +42,7 @@ local cfg_barber = {
     {"Lipstick", "overlay:8"},
     {"Makeup", "overlay:4"}
   },
-  map_entity = {"PoI", {blip_id = 71, blip_color = 3, marker_id = 1}}
+  map_entity = {"PoI", {marker_id = 27}}
 }
 
 -- changes prices (any change to the character parts add amount to the total price)

@@ -12,7 +12,7 @@ cfg.emotes = {
   {"Handsup", -- handsup state, use clear to lower hands
     true,
     { -- sequence, list of {dict,name,loops}
-      {"random@mugging3", "handsup_standing_base", 1}
+      {"random@arrests@busted", "idle_a", 1}
     },
     true
     -- ,permissions = {"player.emote.handsup"}  -- you can add a permissions check
@@ -34,9 +34,9 @@ cfg.emotes = {
   {"Clipboard", false, {task="WORLD_HUMAN_CLIPBOARD"}, false, 5},
   {"Binoculars",false, {task="WORLD_HUMAN_BINOCULARS"}, false},
   {"Cheer",false, {task="WORLD_HUMAN_CHEERING"}, false},
-  {"Crink",false, {task="WORLD_HUMAN_DRINKING"}, false},
-  {"Smoke", false, {task="WORLD_HUMAN_SMOKING"}, false},
-  {"Smoke nervous", false, {task="WORLD_HUMAN_AA_SMOKE"}, false, 5},
+  --{"Crink",false, {task="WORLD_HUMAN_DRINKING"}, false},
+  --{"Smoke", false, {task="WORLD_HUMAN_SMOKING"}, false},
+  --{"Smoke nervous", false, {task="WORLD_HUMAN_AA_SMOKE"}, false, 5},
 --  {"Film", false, {task="WORLD_HUMAN_MOBILE_FILM_SHOCKING"}, false},
 --  {"Plant", false, {task="WORLD_HUMAN_GARDENER_PLANT"}, false},
   {"Guard", false, {task="WORLD_HUMAN_GUARD_STAND"}, false},

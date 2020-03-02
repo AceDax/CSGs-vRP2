@@ -19,7 +19,7 @@ cfg.static_chest_types = {
 
 -- list of static chest points
 cfg.static_chests = {
-  {"police_seized", 452.44293212891,-980.17449951172,30.689586639404}
+  {"police_seized", 478.87994384766,-989.26000976563,24.914716720581}, -- Mission Row PD
 }
 
 return cfg
