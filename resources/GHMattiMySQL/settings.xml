@@ -3,8 +3,8 @@
   <setting key="MySQL:UseConvars">false</setting>
   <setting key="MySQL:Server">localhost</setting>
   <setting key="MySQL:Port">3306</setting>
-  <setting key="MySQL:Database">vrp2fx-dev</setting>
-  <setting key="MySQL:Username">root</setting>
-  <setting key="MySQL:Password">z[X?${Q}XCQ2*7Lo</setting>
+  <setting key="MySQL:Database">ChangeMe</setting>
+  <setting key="MySQL:Username">ChangeME</setting>
+  <setting key="MySQL:Password">ChangeMe</setting>
   <setting key="MySQL:Debug">false</setting>
 </configuration>
