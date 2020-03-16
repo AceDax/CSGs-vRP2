@@ -1,0 +1,10 @@
+Version 13 30
+{
+	Image sm1_16_rsn_flrtile1__n_nxg.dds
+	Type Regular
+	PixelFormat DXT1
+	Levels 8
+	Usage NORMAL
+	UsageFlags -
+	ExtraFlags 0
+}
