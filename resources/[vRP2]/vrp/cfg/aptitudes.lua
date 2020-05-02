@@ -41,7 +41,7 @@ cfg.gaptitudes = {
   ["criminal"] = {
     _title = "Criminal",
     ["hacking"] = {"Hacking", 0, 6375},
-    ["money"] = {"Money Laundry", 0, 6375},
+    -- ["money"] = {"Money Laundry", 0, 6375},
     ["gunsmith"] = {"Gunsmithing", 0, 6375},
     ["locksmith"] = {"Lockpicking", 0, 6375}
   },
