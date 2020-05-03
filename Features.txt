@@ -3,3 +3,4 @@ Features avalible in current build
 -- Custom map made with 50+ MLO interiors as well as several ymap modifications
 -- Whitelisted police and ranks
 -- Whitelisted Fire department/EMS and ranks
+-- Police hire, fire, promote and demote functions
