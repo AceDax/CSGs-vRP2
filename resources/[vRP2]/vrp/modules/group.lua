@@ -213,18 +213,69 @@ local function menu_admin_users_user(self)
     end
   end
 
+  local function m_police_hire(menu)
+    local user = menu.user
+    local tuser = vRP.users[menu.data.id]
+
+    if tuser then
+      tuser:addGroup("police")
+    end
+  end
+
+  local function m_police_fire(menu)
+    local user = menu.user
+    local tuser = vRP.users[menu.data.id]
+
+    if tuser then
+      tuser:removeGroup("police")
+    end
+  end
+
+  local function m_police_promote(menu)
+    local user = menu.user
+    local tuser = vRP.users[menu.data.id]
+
+    if tuser then
+      tuser:levelUp("job", "police")
+      vRP.EXT.Base.remote._notify(user.source, "Promotion level given")
+    end
+  end
+
+  local function m_police_demote(menu)
+    local user = menu.user
+    local tuser = vRP.users[menu.data.id]
+
+    if tuser then
+      tuser:levelDown("job", "police")
+      vRP.EXT.Base.remote._notify(user.source, "Promotion level taken")
+    end
+  end
+
   vRP.EXT.GUI:registerMenuBuilder("admin.users.user", function(menu)
     local user = menu.user
     local tuser = vRP.users[menu.data.id]
 
     if tuser then
-      menu:addOption(lang.admin.users.user.groups.title(), m_groups, lang.admin.users.user.groups.description())
-
+      if user:hasPermission("player.info") then
+        menu:addOption(lang.admin.users.user.groups.title(), m_groups, lang.admin.users.user.groups.description())
+      end
       if user:hasPermission("player.group.add") then
         menu:addOption(lang.admin.users.user.group_add.title(), m_addgroup)
       end
       if user:hasPermission("player.group.remove") then
         menu:addOption(lang.admin.users.user.group_remove.title(), m_removegroup)
+      end
+      if user:hasPermission("police.admin") then
+        menu:addOption(lang.admin.users.user.group_hire.title(), m_police_hire)
+      end
+      if user:hasPermission("police.admin") then
+        menu:addOption(lang.admin.users.user.group_fire.title(), m_police_fire)
+      end
+      if user:hasPermission("police.admin") then
+        menu:addOption("Promote", m_police_promote)
+      end
+      if user:hasPermission("police.admin") then
+        menu:addOption("Demote", m_police_demote)
       end
     end
   end)

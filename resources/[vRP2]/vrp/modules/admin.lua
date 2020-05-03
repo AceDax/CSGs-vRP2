@@ -104,9 +104,9 @@ local function menu_admin_users_user(self)
     end
 
     menu.css.header_color = "rgba(200,0,0,0.75)"
-
-    menu:addOption(lang.admin.users.user.info.title(), m_info, lang.admin.users.user.info.description())
-
+    if user:hasPermission("player.info") then
+      menu:addOption(lang.admin.users.user.info.title(), m_info, lang.admin.users.user.info.description())
+    end
     if tuser and user:hasPermission("player.kick") then
       menu:addOption(lang.admin.users.user.kick.title(), m_kick)
     end
@@ -153,6 +153,25 @@ local function menu_admin_users(self)
 
     for id, user in pairs(vRP.users) do
       menu:addOption(lang.admin.users.user.title({id, htmlEntities.encode(user.name)}), m_user, nil, id)
+    end
+  end)
+end
+
+-- menu: police admin
+-- used by the Police Chief, Sheriff or State Police Director to hire fire and promote their officers
+local function menu_police_admin_users(self)
+  local function m_police_user(menu, id)
+    menu.user:openMenu("admin.users.user", {id = id})
+  end
+
+  vRP.EXT.GUI:registerMenuBuilder("police.admin.users", function(menu)
+    local user = menu.user
+
+    menu.title = lang.admin.users.title()
+    menu.css.header_color = "rgba(200,0,0,0.75)"
+
+    for id, user in pairs(vRP.users) do
+      menu:addOption(lang.admin.users.user.title({id, htmlEntities.encode(user.name)}), m_police_user, nil, id)
     end
   end)
 end
@@ -299,6 +318,7 @@ function Admin:__construct()
 
   menu_admin(self)
   menu_admin_users(self)
+  menu_police_admin_users(self)
   menu_admin_users_user(self)
 
   -- main menu

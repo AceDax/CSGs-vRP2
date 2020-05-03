@@ -29,31 +29,31 @@ cfg.vehicle_chest_weights = {
 cfg.garage_types = {
 
   ["Blackmarket Cars"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}},
+    _config = {map_entity = {"PoI", { marker_id = 1}}},
     ["kuruma2"] = {"Armored Kuruma", 1750000, "<img src='gui/images/cars/ArmouredKaruma.jpg' /><br/><br/>Storage: 50 KG<br/>"},
     ["dukes2"] = {"Armored Dukes", 1500000, "<img src='gui/images/cars/ArmouredDukes.jpg' /><br/><br/>Storage: 50 KG<br/>"},
   },
 
   ["Bus Rental Teir One"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}, permissions = {"!aptitude.job.bus.<10"}},
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions = {"!aptitude.job.bus.<10"}},
     ["RENTALBUS"] = {"Rental Bus", 0, ""},
   },
 
   ["Bus Rental Teir Two"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}, permissions = {"!aptitude.job.bus.>9", "!aptitude.job.bus.<20"}},
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions = {"!aptitude.job.bus.>9", "!aptitude.job.bus.<20"}},
     ["RENTALBUS"] = {"Rental Bus", 0, ""},
     ["BUS"] = {"City Bus", 0, ""},
   },
 
   ["Bus Rental Teir Three"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}, permissions = {"!aptitude.job.bus.>19"}},
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions = {"!aptitude.job.bus.>19"}},
     ["RENTALBUS"] = {"Rental Bus", 0, ""},
     ["BUS"] = {"City Bus", 0, ""},
     ["COACH"] = {"Coach Bus", 0, ""},
   },
 
   ["Luxury Autos"] = { -- sells Buckingham, Pfister, Grotti, Enus and Pegassi-manufactured vehicles
-    _config = {map_entity = {"PoI", {blip_id = 523, blip_color = 1, marker_id = 27}}},
+    _config = {map_entity = {"PoI", {blip_id = 523, blip_color = 1,  marker_id = 1}}},
     ["pfister811"] = {"Pfister 811", 845000, "<img src='images/cars/Pfister811.jpg' /><br/><br/>Storage: 150 KG<br/>"},
     ["comet2"] = {"Pfister Comet",179800, "<img src='images/cars/Pfistercomet.jpg' /><br/><br/>Storage: 150 KG<br/>"},
     ["comet3"] = {"Pfister Comet Retro Custom",177720, "<img src='images/cars/PfisterCometRetroCustom.jpg' /><br/><br/>Storage: 150 KG<br/>"},
@@ -116,7 +116,7 @@ cfg.garage_types = {
   },
 
   ["Mosley Auto Service"] = { -- sells Albany-manufactured vehicles
-    _config = {map_entity = {"PoI", {blip_id = 523, blip_color = 2, marker_id = 27}}},
+    _config = {map_entity = {"PoI", {blip_id = 523, blip_color = 2,  marker_id = 1}}},
     ["alpha"] = {"Albany Alpha",47000, "<img src='images/cars/Albany_Alpha.jpg' /><br/><br/>Storage: 150 KG<br/>"},
     ["btype2"] = {"Albany Fränken Stange", 20000, "<img src='images/cars/Albany_Fränken_Stange.jpg' /><br/><br/>Storage: 150 KG<br/>"},
     ["btype"] = {"Albany Roosevelt", 115000, "<img src='images/cars/Albany_Roosevelt.jpg' /><br/><br/>Storage: 150 KG<br/>"},
@@ -152,7 +152,7 @@ cfg.garage_types = {
   },
 
   ["Premium Deluxe Motorsport"] = { -- sells all OTHER vehicles
-    _config = {map_entity = {"PoI", {blip_id = 523, blip_color = 3, marker_id = 27}}},
+    _config = {map_entity = {"PoI", {blip_id = 523, blip_color = 3,  marker_id = 1}}},
     ["banshee2"] = {"Bravado Banshee 900R", 92500, "<img src='images/cars/Bravado_Banshee_900R.jpg' /><br/><br/>Storage: 105 KG<br/>"},
     ["banshee"] = {"Bravado Banshee",142700, "<img src='images/cars/Bravado_Banshee.jpg' /><br/><br/>Storage: 115 KG<br/>"},
     ["buffalo"] = {"Bravado Buffalo",24835, "<img src='images/cars/Bravado_Buffalo.jpg' /><br/><br/>Storage: 135 KG<br/>"},
@@ -199,7 +199,7 @@ cfg.garage_types = {
   },
 
   ["Sanders Motorcycles"] = { 
-    _config = {map_entity = {"PoI", {blip_id = 522, blip_color = 1, marker_id = 27}}},
+    _config = {map_entity = {"PoI", {blip_id = 522, blip_color = 1,  marker_id = 1}}},
     ["blazer"] = {"Nagasaki Blazer", 1000, "ATV (NOT STREET LEGAL)"},
     ["blazer3"] = {"Nagasaki Hot Rod Blazer", 2000, "ATV (NOT STREET LEGAL)"},
     ["blazer4"] = {"Nagasaki Street Blazer", 5000, "ATV (NOT STREET LEGAL)"},
@@ -250,7 +250,7 @@ cfg.garage_types = {
   },
 
   ["Rental Cars"] = { 
-    _config = {map_entity = {"PoI", {blip_id = 523, blip_color = 4, marker_id = 27}}},
+    _config = {map_entity = {"PoI", {blip_id = 523, blip_color = 4,  marker_id = 1}}},
     ["ratloader"] = {"Bravado Rat Truck", 700, ""},
     ["fugitive"] = {"Cheval Fugitive", 5000, ""},
     ["tailgater"] = {"Obey Tailgater", 5000, ""},
@@ -290,7 +290,7 @@ cfg.garage_types = {
   },
 
   ["Larrys RV Sales"] = { 
-    _config = {map_entity = {"PoI", {blip_id = 85, blip_color = 5, marker_id = 27}}},
+    _config = {map_entity = {"PoI", {blip_id = 85, blip_color = 5,  marker_id = 1}}},
     ["furoregt"] = {"Lampadati Furore GT",100000, ""},
     ["tropos"] = {"Lampadati Tropos Rallye",310000, ""},
     ["casco"] = {"Lampadati Casco", 11400, ""},
@@ -316,7 +316,7 @@ cfg.garage_types = {
   },
 
   ["Vapid Dealership"] = { 
-    _config = {map_entity = {"PoI", {blip_id = 523, blip_color = 6, marker_id = 27}}},
+    _config = {map_entity = {"PoI", {blip_id = 523, blip_color = 6,  marker_id = 1}}},
     ["bullet"] = {"Vapid Bullet", 450000, ""},
     ["fmj"] = {"Vapid FMJ", 400000, ""},
     ["gb200"] = {"Vapid GB200",250000, ""},
@@ -366,7 +366,7 @@ cfg.garage_types = {
   },
 
   ["Benefactor Dealership"] = {
-    _config = {map_entity = {"PoI", {blip_id = 523, blip_color = 7, marker_id = 27}}},
+    _config = {map_entity = {"PoI", {blip_id = 523, blip_color = 7,  marker_id = 1}}},
     ["feltzer2"] = {"Benefactor Feltzer",222000, ""},
     ["schafter4"] = {"Benefactor Schafter LWB", 195000, ""},
     ["schafter3"] = {"Benefactor Schafter V12",192000, ""},
@@ -396,59 +396,127 @@ cfg.garage_types = {
   },
 
   ["Civilian Trailers"] = {
-    _config = {map_entity = {"PoI", {blip_id = 479, blip_color = 4, marker_id = 27}}},
+    _config = {map_entity = {"PoI", {blip_id = 479, blip_color = 4,  marker_id = 1}}},
     ["boattrailer"] = {"Boat Trailer", 5000, ""},
     ["trailersmall"] = {"Utility Trailer", 2500, ""},
   },
 
   ["taxi"] = {
-    _config = {map_entity = {"PoI", {blip_id = 56, blip_color = 5, marker_id = 27}}, permissions = {"taxi.vehicle"} },
+    _config = {map_entity = {"PoI", {blip_id = 56, blip_color = 5,  marker_id = 1}}, permissions = {"taxi.vehicle"} },
     ["taxi"] = {"Taxi",100,""}
   },
 
   ["Attack-A-Taco"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}, permissions = {"taco.vehicle"} },
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions = {"taco.vehicle"} },
     ["taco"] = {"Attack-A-Taco Food Truck",100,""}
   },
 
   ["Union Depository"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}, permissions = {"bank.vehicle"} },
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions = {"bank.vehicle"} },
     ["stockade"] = {"Armored Bank Truck",100,""}
   },
 
-  ["LSPD"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}, permissions = {"LSPD.vehicle"} },
-    -- WIP
+  ["LSPD (Cadet)"] = {
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions = {"police.vehicle"} },
+    ["police"] = {"Police Cruiser",0,"LSPD"},
+    ["pbus"] = {"Prison Bus",0,"LSPD"},
+  },
+  ["LSPD (Patrol)"] = {
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions = {"police.vehicle2"} },
+    ["police"] = {"Police Cruiser",0,"LSPD"},
+    ["police2"] = {"Police Buffalo",0,"LSPD"},
+    ["pbus"] = {"Prison Bus",0,"LSPD"},
+  },
+  ["LSPD (Supervisor)"] = {
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions = {"police.vehicle3"} },
+    ["police"] = {"Police Cruiser",0,"LSPD"},
+    ["police2"] = {"Police Buffalo",0,"LSPD"},
+    ["police3"] = {"Police Interceptor",0,"LSPD"},
+    ["polbuffals"] = {"Police Buffalo S",0,"LSPD"},
+    ["police4"] = {"Unmarked Police Cruiser",0,"LSPD"},
+    ["fbi"] = {"Unmarked Police Buffalo",0,"LSPD"},
+    ["fbi2"] = {"Unmarked Police Granger",0,"LSPD"},
+    ["trubuffals"] = {"Unmarked Police Buffalo S type 1",0,"LSPD"},
+    ["trubuffals2"] = {"Unmarked Police Buffalo S type 2",0,"LSPD"},
+    ["umkbuffals"] = {"Unmarked Police Buffalo S type 3",0,"LSPD"},
+    ["umkbuffals2"] = {"Unmarked Police Buffalo S type 4",0,"LSPD"},
+    ["pbus"] = {"Prison Bus",0,"LSPD"},
+  },
+  ["LSPD (Command)"] = {
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions = {"police.vehicle4"} },
+    ["police"] = {"Police Cruiser",0,"LSPD"},
+    ["police2"] = {"Police Buffalo",0,"LSPD"},
+    ["police3"] = {"Police Interceptor",0,"LSPD"},
+    ["polbuffals"] = {"Police Buffalo S",0,"LSPD"},
+    ["police4"] = {"Unmarked Police Cruiser",0,"LSPD"},
+    ["fbi"] = {"Unmarked Police Buffalo",0,"LSPD"},
+    ["fbi2"] = {"Unmarked Police Granger",0,"LSPD"},
+    ["trubuffals"] = {"Unmarked Police Buffalo S type 1",0,"LSPD"},
+    ["trubuffals2"] = {"Unmarked Police Buffalo S type 2",0,"LSPD"},
+    ["umkbuffals"] = {"Unmarked Police Buffalo S type 3",0,"LSPD"},
+    ["umkbuffals2"] = {"Unmarked Police Buffalo S type 4",0,"LSPD"},
+    ["riot"] = {"Police Armored NOOSE Truck",0,"LSPD"},
+    ["riot2"] = {"Police Riot Control Vehicle",0,"LSPD"},
+    ["policeb"] = {"Police Motorcycle",0,"LSPD"},
+    ["pbus"] = {"Prison Bus",0,"LSPD"},
   },
 
-  ["BCSO"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}, permissions = {"BCSO.vehicle"} },
-    -- WIP
+  ["LSSD"] = {
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions = {"deputy.vehicle"} },
+    ["sheriff"] = {"Sheriff Cruiser",0,"LSSD"},
+    ["sheriff2"] = {"Sheriff Granger",0,"LSSD"},
+    ["sheriff3"] = {"Sheriff Buffalo",0,"LSSD"},
+    ["sherifffug"] = {"Sheriff Fugitive",0,"LSSD"},
+    ["sheriffscout"] = {"Sheriff Scout",0,"LSSD"},
+    ["police4"] = {"Unmarked Sheriff Cruiser",0,"LSSD"},
+    ["fbi"] = {"Unmarked Sheriff Buffalo",0,"LSSD"},
+    ["fbi2"] = {"Unmarked Sheriff Granger",0,"LSSD"},
+    ["trubuffals"] = {"Unmarked Sheriff Buffalo S type 1",0,"LSSD"},
+    ["trubuffals2"] = {"Unmarked Sheriff Buffalo S type 2",0,"LSSD"},
+    ["umkbuffals"] = {"Unmarked Sheriff Buffalo S type 3",0,"LSSD"},
+    ["umkbuffals2"] = {"Unmarked Sheriff Buffalo S type 4",0,"LSSD"},
+    ["sheriffinsurgent"] = {"Sheriff Armored NOOSE Truck",0,"LSSD"},
+    ["riot2"] = {"Sheriff Riot Control Vehicle",0,"LSSD"},
+    ["sherb"] = {"Sheriff Motorcycle",0,"LSSD"},
+    ["pbus"] = {"Prison Bus",0,"LSSD"},
   },
 
-  ["SASP"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}, permissions = {"SASP.vehicle"} },
-    -- WIP
+  ["SAHP"] = {
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions = {"highway.vehicle"} },
+    ["hwaybuffals"] = {"Highway Patrol Buffalo S",0,"SAHP"},
+    ["hwaybuffals2"] = {"Slicktop Highway Patrol Buffalo S",0,"SAHP"},
+    ["hwaycarnew"] = {"Highway Patrol Interceptor",0,"SAHP"},
+    ["police4"] = {"Unmarked Highway Patrol Cruiser",0,"SAHP"},
+    ["fbi"] = {"Unmarked Highway Patrol Buffalo",0,"SAHP"},
+    ["fbi2"] = {"Unmarked Highway Patrol Granger",0,"SAHP"},
+    ["trubuffals"] = {"Unmarked Highway Patrol Buffalo S type 1",0,"SAHP"},
+    ["trubuffals2"] = {"Unmarked Highway Patrol Buffalo S type 2",0,"SAHP"},
+    ["umkbuffals"] = {"Unmarked Highway Patrol Buffalo S type 3",0,"SAHP"},
+    ["umkbuffals2"] = {"Unmarked Highway Patrol Buffalo S type 4",0,"SAHP"},
+    ["hwayboxville"] = {"Highway Patrol NOOSE Command Truck",0,"SAHP"},
+    ["riot2"] = {"Highway Patrol Riot Control Vehicle",0,"SAHP"},
+    ["hwayb"] = {"Highway Patrol Motorcycle",0,"SAHP"},
+    ["pbus"] = {"Prison Bus",0,"SAHP"},
   },
 
   ["Helipad"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}, permissions = {"police.heli"} },
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions = {"police.heli"} },
     ["polmav"] = {"Maverick Helicopter",250000, ""},  
   },
 
   ["Fire Department"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}, permissions = {"emergency.vehicle"} },
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions = {"emergency.vehicle"} },
     -- WIP
   },
 
   ["Emergency boats"] = {
-    _config = {map_entity = {"PoI", {blip_id = 427, blip_color = 4, marker_id = 27}}, permissions = {"police.vehicle"} },
+    _config = {map_entity = {"PoI", {blip_id = 427, blip_color = 4,  marker_id = 1}}, permissions = {"police.vehicle"} },
     ["predator"] = {"Predator",0, "police"},
 	  ["seashark2"] = {"Lifeguard Seashark",0, "EMS"},
   },
 
   ["bicycles"] = {
-    _config = {map_entity = {"PoI", {blip_id = 226, blip_color = 4, marker_id = 27}}},
+    _config = {map_entity = {"PoI", {blip_id = 226, blip_color = 4,  marker_id = 1}}},
     ["bmx"] = {"BMX", 150, ""},
     ["cruiser"] = {"Beach Cruiser", 100, ""},
     ["tribike2"] = {"Endurex Race Bike", 250, ""},
@@ -459,7 +527,7 @@ cfg.garage_types = {
   },
 
   ["boats"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}},
+    _config = {map_entity = {"PoI", { marker_id = 1}}},
     ["dinghy"] = {"Dinghy", 50000, "A zodiac."},
     ["dinghy2"] = {"Dinghy II", 50000, "A zodiac."},
     ["dinghy3"] = {"Dinghy III", 50000, "A zodiac."},
@@ -481,7 +549,7 @@ cfg.garage_types = {
   },
 
   ["planes"] = {
-    _config = {map_entity = {"PoI", {blip_id = 307, blip_color = 4, marker_id = 27}}, permissions = {"pilot.whitelisted"} },
+    _config = {map_entity = {"PoI", {blip_id = 307, blip_color = 4,  marker_id = 1}}, permissions = {"pilot.whitelisted"} },
     ["velum"] = {"Velum", 500000, "Propeller plane."},
     ["velum2"] = {"Velum II", 500000, "Propeller plane."},
     ["stunt"] = {"Stunt", 250000, "Small propeller plane."},
@@ -494,7 +562,7 @@ cfg.garage_types = {
   },
 
   ["helicopters"] = {
-    _config = {map_entity = {"PoI", {blip_id = 43, blip_color = 4, marker_id = 27}}, permissions = {"pilot.whitelisted"} },
+    _config = {map_entity = {"PoI", {blip_id = 43, blip_color = 4,  marker_id = 1}}, permissions = {"pilot.whitelisted"} },
     ["maverick"] = {"Maverick", 150000, "Basic chopper."},
     ["swift"] = {"Swift", 550000, "Fast chopper."},
     ["swift2"] = {"Swift II", 550000, "Fast chopper."},
@@ -504,7 +572,7 @@ cfg.garage_types = {
   },
 
   ["transport"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}},
+    _config = {map_entity = {"PoI", { marker_id = 1}}},
     ["mule2"] = {"Maibatsu Mule", 50000, ""},
     ["benson"] = {"Vapid Benson", 70000, ""},
     ["pounder"] = {"MTL Pounder", 90000, ""},
@@ -515,24 +583,24 @@ cfg.garage_types = {
   },
 
   ["containers"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}},
+    _config = {map_entity = {"PoI", { marker_id = 1}}},
     ["trailers"] = {"Basic", 30000, "Medium container."},
     ["tanker"] = {"Tanker", 300000, "Big container."},
     ["tr2"] = {"Car Hauler", 20000, "Car Trailer."}
   },
 
   ["tow"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}, permissions={"tow.vehicle"} },
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions={"tow.vehicle"} },
     ["flatbed"] = {"Basic Flatbed", 1000, "tow"},
   },
 
   ["GoPostal"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}, permissions = {"postal.vehicle"} },
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions = {"postal.vehicle"} },
     ["boxville2"] = {"GoPostal Van",150,""}
   },
 
   ["PostOps"] = {
-    _config = {map_entity = {"PoI", {marker_id = 27}}, permissions = {"postops.vehicle"} },
+    _config = {map_entity = {"PoI", { marker_id = 1}}, permissions = {"postops.vehicle"} },
     ["boxville4"] = {"PostOps Van",150,""}
   },
 }
@@ -551,9 +619,13 @@ cfg.garages = {
 
   {"taxi",908.72912597656,-176.1830291748,74.182678222656},
 
-  {"LSPD",449.82241821289,-1013.9649658203,28.488388061523},
-  {"BCSO",-468.97213745117,6038.6674804688,31.340539932251},
-  {"SASP",860.04498291016,-1350.3395996094,26.066228866577},
+  {"LSPD (Cadet)",449.82241821289,-1013.9649658203,28.488388061523}, --Mission Row
+  {"LSPD (Patrol)",449.82241821289,-1013.9649658203,28.488388061523}, --Mission Row
+  {"LSPD (Supervisor)",449.82241821289,-1013.9649658203,28.488388061523}, --Mission Row
+  {"LSPD (Command)",449.82241821289,-1013.9649658203,28.488388061523}, --Mission Row
+
+  {"LSSD",-473.64807128906,6019.2836914063,31.3405418396}, --Paleto SO
+  {"SAHP",860.04498291016,-1350.3395996094,26.066228866577},
 
   {"Helipad",449.09732055664,-981.26141357422,43.691661834717}, -- Mission Row
   {"Helipad",-466.79919433594,5981.0209960938,33.205085754395}, -- paleto SO

@@ -118,7 +118,9 @@ local function menu_admin_users_user(self)
     local tuser = vRP.users[menu.data.id]
 
     if tuser then
-      menu:addOption(lang.identity.title(), m_identity)
+      if user:hasPermission("player.info") then
+        menu:addOption(lang.identity.title(), m_identity)
+      end
     end
   end)
 end

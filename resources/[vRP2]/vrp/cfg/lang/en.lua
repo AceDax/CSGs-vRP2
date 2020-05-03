@@ -125,6 +125,12 @@ local lang = {
           title = "Remove group",
           prompt = "Group to remove: "
         },
+        group_hire = {
+          title = "Hire",
+        },
+        group_fire = {
+          title = "Fire",
+        },
         give_money = {
           title = "Give money",
           prompt = "Amount: "

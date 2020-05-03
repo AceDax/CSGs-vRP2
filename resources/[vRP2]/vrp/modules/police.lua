@@ -520,6 +520,10 @@ local function menu_police(self)
     end
   end
 
+  local function m_police_users(menu)
+    menu.user:openMenu("police.admin.users")
+  end
+
   vRP.EXT.GUI:registerMenuBuilder("player", function(menu)
     menu:addOption(lang.police.menu.getoutveh.title(), m_getoutveh, lang.police.menu.getoutveh.description())
     menu:addOption(lang.police.menu.putinveh.title(), m_putinveh, lang.police.menu.putinveh.description())
@@ -529,6 +533,10 @@ local function menu_police(self)
     local user = menu.user
     menu.title = lang.police.title()
     menu.css.header_color = "rgba(0,125,255,0.75)"
+
+    if user:hasPermission("police.admin") then
+      menu:addOption(lang.admin.users.title(), m_police_users)
+    end
 
     if user:hasPermission("police.askid") then
       menu:addOption(lang.police.menu.askid.title(), m_askid, lang.police.menu.askid.description())
