@@ -37,4 +37,7 @@ files {
   "html/locales/cs.js",
   "html/locales/en.js",
   "html/locales/fr.js",
+  -- IMAGES
+  "html/img/*.png",
+  "html/img/items/*.png",
 }
