@@ -11,7 +11,7 @@ cfg.lose_inventory_on_death = true
 cfg.static_chest_types = {
   ["police_seized"] = {
     title = "Seized chest",
-    map_entity = {"PoI", {blip_id = 374, blip_color = 38, marker_id = 1}},
+    map_entity = {"PoI", {marker_id = 1}},
     weight = 500,
     permissions = {"police.chest_seized"}
   }
@@ -19,7 +19,8 @@ cfg.static_chest_types = {
 
 -- list of static chest points
 cfg.static_chests = {
-  {"police_seized", 478.87994384766,-989.26000976563,24.914716720581}, -- Mission Row PD
+  {"police_seized", 478.75317382813,-989.27679443359,24.914684295654}, -- Mission Row PD
+  {"police_seized", -441.8440246582,5987.5805664063,31.716188430786}, -- Paleto SO
 }
 
 return cfg

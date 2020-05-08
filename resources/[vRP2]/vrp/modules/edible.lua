@@ -41,34 +41,39 @@ local function define_items(self)
     local citem = vRP.EXT.Inventory:computeItem(fullid)
     local edible = self.edibles[citem.args[2]]
     local etype = self.types[edible.type]
+    local dead = vRP.EXT.Survival.remote.isInComa(user.source)
 
     -- consume
-    if user:tryTakeItem(fullid, 1, true) then -- available check
-      if user.edible_action:perform(self.cfg.action_delay) then
-        user:tryTakeItem(fullid, 1, nil, true) -- consume
+    if not dead or user:hasPermission("menu.bypass") then
+      if user:tryTakeItem(fullid, 1, true) then -- available check
+        if user.edible_action:perform(self.cfg.action_delay) then
+          user:tryTakeItem(fullid, 1, nil, true) -- consume
 
-        -- menu update
-        local namount = user:getItemAmount(fullid)
-        if namount > 0 then
-          user:actualizeMenu()
-        else
-          user:closeMenu(menu)
-        end
-
-        -- on_consume
-        etype[2](user, edible)
-
-        -- effects
-        for id, value in pairs(edible.effects) do
-          local effect = self.effects[id]
-          if effect then
-            -- on_effect
-            effect(user, value)
+          -- menu update
+          local namount = user:getItemAmount(fullid)
+          if namount > 0 then
+            user:actualizeMenu()
+          else
+            user:closeMenu(menu)
           end
+
+          -- on_consume
+          etype[2](user, edible)
+
+          -- effects
+          for id, value in pairs(edible.effects) do
+            local effect = self.effects[id]
+            if effect then
+              -- on_effect
+              effect(user, value)
+            end
+          end
+        else
+          vRP.EXT.Base.remote._notify(user.source, lang.common.must_wait({user.edible_action:remaining()}))
         end
-      else
-        vRP.EXT.Base.remote._notify(user.source, lang.common.must_wait({user.edible_action:remaining()}))
       end
+    else
+      vRP.EXT.Base.remote._notify(user.source, "~r~You cannot Eat while in Coma, Call EMS!")
     end
   end
 
@@ -91,7 +96,16 @@ local function define_items(self)
     end
   end
 
-  vRP.EXT.Inventory:defineItem("edible", i_edible_name, i_edible_description, i_edible_menu, i_edible_weight)
+  local function i_edible_icon(args)
+    local edible = self.edibles[args[2]]
+    if edible then
+      return edible.icon
+    else
+      return "apple"
+    end
+  end
+
+  vRP.EXT.Inventory:defineItem("edible", i_edible_name, i_edible_description, i_edible_menu, i_edible_weight, "edible", i_edible_icon, "yes")
 end
 
 local function define_basics(self)
@@ -329,7 +343,7 @@ function Edible:__construct()
 
   -- load edibles
   for id, v in pairs(self.cfg.edibles) do
-    self:defineEdible(id, v[1], v[2], v[3], v[4], v[5])
+    self:defineEdible(id, v[1], v[2], v[3], v[4], v[5], v[6])
   end
 
   -- items
@@ -363,7 +377,7 @@ end
 -- name: (string)
 -- description: (html)
 -- weight
-function Edible:defineEdible(id, type, effects, name, description, weight)
+function Edible:defineEdible(id, type, effects, name, description, weight, icon)
   if self.edibles[id] then
     self:log("WARNING: re-defined edible \""..id.."\"")
   end
@@ -373,8 +387,55 @@ function Edible:defineEdible(id, type, effects, name, description, weight)
     effects = effects, 
     name = name, 
     description = description,
-    weight = weight
+    weight = weight,
+    icon = icon
   }
 end
+
+function Edible:eatEdible(source, fullid)
+	local user = vRP.users_by_source[source]
+
+  local citem = vRP.EXT.Inventory:computeItem(fullid)
+  local edible = self.edibles[citem.args[2]]
+  local etype = self.types[edible.type]
+	local dead = vRP.EXT.Survival.remote.isInComa(user.source)
+
+  -- consume
+	if not dead or user:hasPermission("menu.bypass") then
+    if user:tryTakeItem(fullid, 1, true) then -- available check
+      if user.edible_action:perform(self.cfg.action_delay) then
+        user:tryTakeItem(fullid, 1, nil, true) -- consume
+
+        -- menu update
+        local namount = user:getItemAmount(fullid)
+        if namount > 0 then
+          user:actualizeMenu()
+        else
+          user:closeMenu(menu)
+        end
+
+        -- on_consume
+        etype[2](user, edible)
+
+        -- effects
+        for id, value in pairs(edible.effects) do
+          local effect = self.effects[id]
+          if effect then
+            -- on_effect
+            effect(user, value)
+          end
+        end
+      else
+        vRP.EXT.Base.remote._notify(user.source, lang.common.must_wait({user.edible_action:remaining()}))
+		  end
+    end
+	else
+	  vRP.EXT.Base.remote._notify(user.source, "~r~You cannot Eat while in Coma, Call EMS!")
+  end
+end
+
+Edible.tunnel = {}
+
+Edible.tunnel.eatEdible = Edible.eatEdible
 
 vRP:registerExtension(Edible)

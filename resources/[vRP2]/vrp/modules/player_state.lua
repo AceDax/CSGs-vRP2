@@ -169,6 +169,10 @@ local function define_items(self)
     return lang.item.wbody.name({get_wname(args[2])})
   end
 
+  local function i_wbody_icon(args)
+    return args[2]
+  end
+
   local function i_wbody_desc(args)
     return lang.item.wbody.description({get_wname(args[2])})
   end
@@ -196,7 +200,7 @@ local function define_items(self)
     menu:addOption(lang.item.wbody.equip.title(), m_wbody_equip)
   end
 
-  vRP.EXT.Inventory:defineItem("wbody",i_wbody_name,i_wbody_desc,i_wbody_menu,0.75)
+  vRP.EXT.Inventory:defineItem("wbody",i_wbody_name,i_wbody_desc,i_wbody_menu,1.0, "weapon", i_wbody_icon, "yes")
 
   -- wammo
 
@@ -267,7 +271,7 @@ local function define_items(self)
     end
   end
 
-  vRP.EXT.Inventory:defineItem("wammo", i_wammo_name,i_wammo_desc,i_wammo_menu,0.01)
+  vRP.EXT.Inventory:defineItem("wammo", i_wammo_name,i_wammo_desc,i_wammo_menu,0.01, "ammo", "clip", "yes")
 
   -- wcomp
 
@@ -288,7 +292,7 @@ local function define_items(self)
     end)
   end
 
-  vRP.EXT.Inventory:defineItem("wcomp",i_wcomp_name,i_wcomp_desc,i_wcomp_menu,0.75)
+  vRP.EXT.Inventory:defineItem("wcomp",i_wcomp_name,i_wcomp_desc,i_wcomp_menu,0.25, "comp", "comp", "yes")
 
 -- wtint
 
@@ -309,8 +313,21 @@ local function define_items(self)
     end)
   end
 
-  vRP.EXT.Inventory:defineItem("wtint",i_wtint_name,i_wtint_desc,i_wtint_menu,0.75)
+  vRP.EXT.Inventory:defineItem("wtint",i_wtint_name,i_wtint_desc,i_wtint_menu,0.05, "tint", "tint", "yes")
 
+end
+-- PRIVATE METHODS
+
+function PlayerState:setTint(source, tint)
+  local user = vRP.users_by_source[source]
+  local citem = vRP.EXT.Inventory:computeItem(tint)
+  user:openMenu("tinta", {tintname = citem.args[2]})
+end
+
+function PlayerState:setComp(source, comp)
+  local user = vRP.users_by_source[source]
+  local citem = vRP.EXT.Inventory:computeItem(comp)
+  user:openMenu("componente", {componente = citem.args[2]})
 end
 
 -- PRIVATE METHODS
