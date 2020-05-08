@@ -54,7 +54,7 @@ window.addEventListener("message", function (event) {
                 itemData = $(this).data("item");
 
                 if (itemData !== undefined && itemData.name !== undefined) {
-                    $(this).css('background-image', 'url(\'img/items/' + itemData.name + '.png\'');
+                    $(this).css('background-image', 'url(\'img/items/' + itemData.icon + '.png\'');
                     $("#drop").removeClass("disabled");
                     $("#use").removeClass("disabled");
                     $("#give").removeClass("disabled");
@@ -69,7 +69,7 @@ window.addEventListener("message", function (event) {
         $("#nearPlayers").html("");
 
         $.each(event.data.players, function (index, player) {
-            $("#nearPlayers").append('<button class="nearbyPlayerButton" data-player="' + player.player + '">' + player.label + ' (' + player.player + ')</button>');
+            $("#nearPlayers").append('<button class="nearbyPlayerButton" data-player="' + player.psource + '">' + player.label + ' (' + player.pid + ')</button>');
         });
 
         $("#dialog").dialog("open");
@@ -95,10 +95,12 @@ function inventorySetup(items) {
     $.each(items, function (index, item) {
         count = setCount(item);
 
-        $("#playerInventory").append('<div class="slot"><div id="item-' + index + '" class="item" style = "background-image: url(\'img/items/' + item.name + '.png\')">' +
+        $("#playerInventory").append('<div class="slot"><div id="item-' + index + '" class="item" style = "background-image: url(\'img/items/' + item.icon + '.png\')">' +
             '<div class="item-count">' + count + '</div> <div class="item-name">' + item.label + '</div> </div ><div class="item-name-bg"></div></div>');
         $('#item-' + index).data('item', item);
         $('#item-' + index).data('inventory', "main");
+		
+		
     });
 }
 
@@ -107,7 +109,7 @@ function secondInventorySetup(items) {
     $.each(items, function (index, item) {
         count = setCount(item);
 
-        $("#otherInventory").append('<div class="slot"><div id="itemOther-' + index + '" class="item" style = "background-image: url(\'img/items/' + item.name + '.png\')">' +
+        $("#otherInventory").append('<div class="slot"><div id="itemOther-' + index + '" class="item" style = "background-image: url(\'img/items/' + item.icon + '.png\')">' +
             '<div class="item-count">' + count + '</div> <div class="item-name">' + item.label + '</div> </div ><div class="item-name-bg"></div></div>');
         $('#itemOther-' + index).data('item', item);
         $('#itemOther-' + index).data('inventory', "second");
@@ -176,7 +178,8 @@ $(document).ready(function () {
             itemData = ui.draggable.data("item");
             if (itemData.usable) {
                 $.post("http://esx_inventoryhud/UseItem", JSON.stringify({
-                    item: itemData
+                    item: itemData,
+					number: parseInt($("#count").val())
                 }));
             }
         }
