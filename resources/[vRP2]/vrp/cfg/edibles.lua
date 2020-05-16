@@ -62,7 +62,7 @@ cfg.edibles = {
   whiskey = {"alcohol", {health = 0.0}, "Whiskey", "", 0.5, "vodka"},
   scotch = {"alcohol", {health = 0.0}, "Scotch", "", 0.5, "vodka"},
   bourbon = {"alcohol", {health = 0.0}, "Bourbon", "", 0.5, "vodka"},
-  coffee = {"coffee", {water = 0.3}, "Coffee", "", 0.2, "vodka"},
+  coffee = {"coffee", {water = 0.3}, "Coffee", "", 0.2, "coffee"},
   --=====|=====|=====--
   --=====|Fruit|=====--
   --=====|=====|=====--
