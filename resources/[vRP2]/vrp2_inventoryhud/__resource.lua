@@ -5,7 +5,6 @@ description "vRP2 Inventory HUD"
 
 dependencies{
   "vrp",
-  "vrp2_functions",
   "es_extended"
 }
 
@@ -16,7 +15,8 @@ ui_page "html/ui.html"
 client_scripts {
   "@es_extended/locale.lua",
   "@vrp/lib/utils.lua",  
-  "client.lua",
+  "inventory/client.lua",
+  "cfg/config.lua",
   "locales/en.lua",
 }
 
@@ -24,6 +24,7 @@ server_scripts {
   "@es_extended/locale.lua",
   "@vrp/lib/utils.lua",
   "server_vrp.lua",
+  "cfg/config.lua",
   "locales/en.lua",
 }
 

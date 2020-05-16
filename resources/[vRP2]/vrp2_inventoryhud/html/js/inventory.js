@@ -77,7 +77,7 @@ window.addEventListener("message", function (event) {
         $(".nearbyPlayerButton").click(function () {
             $("#dialog").dialog("close");
             player = $(this).data("player");
-            $.post("http://esx_inventoryhud/GiveItem", JSON.stringify({
+            $.post("http://vrp2_inventoryhud/GiveItem", JSON.stringify({
                 player: player,
                 item: event.data.item,
                 number: parseInt($("#count").val())
@@ -87,7 +87,7 @@ window.addEventListener("message", function (event) {
 });
 
 function closeInventory() {
-    $.post("http://esx_inventoryhud/NUIFocusOff", JSON.stringify({}));
+    $.post("http://vrp2_inventoryhud/NUIFocusOff", JSON.stringify({}));
 }
 
 function inventorySetup(items) {
@@ -177,7 +177,7 @@ $(document).ready(function () {
         drop: function (event, ui) {
             itemData = ui.draggable.data("item");
             if (itemData.usable) {
-                $.post("http://esx_inventoryhud/UseItem", JSON.stringify({
+                $.post("http://vrp2_inventoryhud/UseItem", JSON.stringify({
                     item: itemData,
 					number: parseInt($("#count").val())
                 }));
@@ -190,7 +190,7 @@ $(document).ready(function () {
         drop: function (event, ui) {
             itemData = ui.draggable.data("item");
             if (itemData.canRemove) {
-                $.post("http://esx_inventoryhud/GetNearPlayers", JSON.stringify({
+                $.post("http://vrp2_inventoryhud/GetNearPlayers", JSON.stringify({
                     item: itemData
                 }));
             }
@@ -202,7 +202,7 @@ $(document).ready(function () {
         drop: function (event, ui) {
             itemData = ui.draggable.data("item");
             if (itemData.canRemove) {
-                $.post("http://esx_inventoryhud/DropItem", JSON.stringify({
+                $.post("http://vrp2_inventoryhud/DropItem", JSON.stringify({
                     item: itemData,
                     number: parseInt($("#count").val())
                 }));
@@ -217,25 +217,25 @@ $('#playerInventory').droppable({
 
             if (type === "trunk" && itemInventory === "second") {
                 disableInventory(500);
-                $.post("http://esx_inventoryhud/TakeFromTrunk", JSON.stringify({
+                $.post("http://vrp2_inventoryhud/TakeFromTrunk", JSON.stringify({
                     item: itemData,
                     number: parseInt($("#count").val())
                 }));
             } else if (type === "property" && itemInventory === "second") {
                 disableInventory(500);
-                $.post("http://esx_inventoryhud/TakeFromProperty", JSON.stringify({
+                $.post("http://vrp2_inventoryhud/TakeFromProperty", JSON.stringify({
                     item: itemData,
                     number: parseInt($("#count").val())
                 }));
             } else if (type === "glovebox" && itemInventory === "second") {
                 disableInventory(500);
-                $.post("http://esx_inventoryhud/TakeFromGlovebox", JSON.stringify({
+                $.post("http://vrp2_inventoryhud/TakeFromGlovebox", JSON.stringify({
                     item: itemData,
                     number: parseInt($("#count").val())
                 }));
             } else if (type === "player" && itemInventory === "second") {
                 disableInventory(500);
-                $.post("http://esx_inventoryhud/TakeFromPlayer", JSON.stringify({
+                $.post("http://vrp2_inventoryhud/TakeFromPlayer", JSON.stringify({
                     item: itemData,
                     number: parseInt($("#count").val())
                 }));
@@ -249,25 +249,25 @@ $('#playerInventory').droppable({
             itemInventory = ui.draggable.data("inventory");
  if (type === "trunk" && itemInventory === "main") {
             disableInventory(500);
-            $.post("http://esx_inventoryhud/PutIntoTrunk", JSON.stringify({
+            $.post("http://vrp2_inventoryhud/PutIntoTrunk", JSON.stringify({
                 item: itemData,
                 number: parseInt($("#count").val())
             }));
         } else if (type === "property" && itemInventory === "main") {
             disableInventory(500);
-            $.post("http://esx_inventoryhud/PutIntoProperty", JSON.stringify({
+            $.post("http://vrp2_inventoryhud/PutIntoProperty", JSON.stringify({
                 item: itemData,
                 number: parseInt($("#count").val())
             }));
         } else if (type === "glovebox" && itemInventory === "main") {
             disableInventory(500);
-            $.post("http://esx_inventoryhud/PutIntoGlovebox", JSON.stringify({
+            $.post("http://vrp2_inventoryhud/PutIntoGlovebox", JSON.stringify({
                 item: itemData,
                 number: parseInt($("#count").val())
             }));
         } else if (type === "player" && itemInventory === "main") {
             disableInventory(500);
-            $.post("http://esx_inventoryhud/PutIntoPlayer", JSON.stringify({
+            $.post("http://vrp2_inventoryhud/PutIntoPlayer", JSON.stringify({
                 item: itemData,
                 number: parseInt($("#count").val())
             }));

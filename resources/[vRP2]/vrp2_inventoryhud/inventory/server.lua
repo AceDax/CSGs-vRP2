@@ -135,14 +135,16 @@ AddEventHandler("inventoryHud:useItem", function(fullid, count)
     elseif citem.itype == "ammo" then
         local ammoid = citem.args[1] .. "|" .. citem.args[2]
         local weapons = vRP.EXT.PlayerState.remote.getWeapons(user.source)
-        local amount = tonumber(citem.args[3]) or 0
+        local amount = tonumber(citem.args[3]) or parseInt(count)
 
         if weapons[citem.args[2]] then
-            if user:tryTakeItem(fullid, 1) then
+            if user:tryTakeItem(fullid, amount) then
                 local weapons = {}
 
                 weapons[citem.args[2]] = { ammo = amount}
                 vRP.EXT.PlayerState.remote._giveWeapons(user.source, weapons)
+            else
+                vRP.EXT.Base.remote._notify(user.source, "~r~Not a valid amount")
             end
         else
             vRP.EXT.Base.remote._notify(user.source, "~y~Cannot find the weapon for this type of ammo.")
@@ -150,7 +152,7 @@ AddEventHandler("inventoryHud:useItem", function(fullid, count)
         end
 		
     elseif citem.itype == "special" then
-        vRP.EXT.AddonsV:specialFunction(user.source, fullid, count)
+        vRP.EXT.Functions:specialFunction(user.source, fullid, count)
         TriggerClientEvent("inventoryHud:closeMenu", user.source)
 		
     elseif citem.itype == "tint" then
