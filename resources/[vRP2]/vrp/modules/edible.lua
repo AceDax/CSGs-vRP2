@@ -435,6 +435,7 @@ local function define_basics(self)
         vRP.EXT.Functions.remote.stopScreenEffect(user.source, "DrugsMichaelAliensFight")
         vRP.EXT.Functions.remote.stopScreenEffect(user.source, "DrugsDrivingIn")
       end)
+    end
   end)
 end
 
