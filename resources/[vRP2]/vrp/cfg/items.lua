@@ -98,13 +98,30 @@ cfg.items = {
   ["crate"] = {"Crate", "A wooden crate for shipping", nil, 0.5,"item","stone", "no"},
   ["barrel"] = {"Barrel", "An empty barrel.", nil, 5.0,"item","stone", "no"},
   ["harvest"] = {"Farm Fresh Harvest", "A crate of freshly harvested crops", nil, 10.0,"item","stone", "no"},
-  --============================--
+  --===================--
   --====Other Items====--
-  --============================--
+  --===================--
   ["lighter"] = {"A Lighter","used to lighting things on fire.",nil,0.2,"item","stone", "no"},
   ["coffee"] = {"Coffee", "", nil, 0.2,"item","stone", "no"},
   ["boom_box"] = {"Boom Box", "An old style boom box.", nil, 2.0,"item","stone", "no"},
   ["sour"] = {"Sour Mix", "",nil, 0.5,"item","stone", "no"},
+  --=====================--
+  --====Special Items====--
+  --=====================--
+
+  --==|IMPORTANT|==--
+  --Re-defined Stock Items with "Use" Options - Remove from there server defined locations or re-defind them where they are defined
+  --Some "special" iTypes are triggered function, you need to disable other functions and redefind them here 
+  --eg.. (medkits), Garage(repairKits), Business(dirty_money) --disable these and redefine then here as a Special iType,
+  --all special itypes will be triggered in vRP2_Functions then sent to the appropiate Extension
+  --This will need to be done for any custom special items in future Extensions as well
+
+  ["money_binder"] = {"Money Binder", "Used to bind cash", nil, 0.00, "special", "cash", "yes"},
+  ["repairkit"] = {"Repairkit", "", nil, 1.00, "special", "fixkit", "yes"},
+  ["medkit"] = {"Med Kit", "", nil, 0.10, "special", "medikit", "yes"},
+  ["money"] = {"Packed money", "Some Rolled Cash", nil, 0.00, "special", "cash", "yes"},
+  ["lockpick"] = {"Lockpick", "Used to unlock vehicles", nil, 0.5, "special", "fixtool", "yes"},
+  ["bandage"] = {"Bandages", "Used to heal minor wounds.", nil, 0.1, "special", "bandage", "yes"},
 }
 
 return cfg

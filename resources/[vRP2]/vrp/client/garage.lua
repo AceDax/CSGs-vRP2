@@ -262,7 +262,12 @@ end
 function Garage:fixNearestVehicle(radius)
   local veh = self:getNearestVehicle(radius)
   if IsEntityAVehicle(veh) then
-    SetVehicleFixed(veh)
+    -- SetVehicleFixed(veh) --old method
+    SetVehicleUndriveable(veh,false) --new method (this will not instantly fix a vehicle, instead only get it drivable so players have to take it to a mechanic to be fully repaired)
+		SetVehicleEngineHealth(veh, 365) --new method
+		SetVehiclePetrolTankHealth(veh, 750.0) --new method
+		SetVehicleEngineOn(veh, true, false ) --new method
+		SetVehicleOilLevel(veh,(GetVehicleOilLevel(veh)/3)-0.5) --new method
   end
 end
 

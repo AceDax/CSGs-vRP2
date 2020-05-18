@@ -58,8 +58,8 @@ function Survival:__construct()
   self:registerVital("food", 0.75)
 
   -- items
-  vRP.EXT.Inventory:defineItem("medkit", lang.item.medkit.name(), lang.item.medkit.description(), nil, 0.5)
-  vRP.EXT.Inventory:defineItem("bandage", "bandages", "Used to heal minor wounds.", nil, 0.1)
+  -- vRP.EXT.Inventory:defineItem("medkit", lang.item.medkit.name(), lang.item.medkit.description(), nil, 0.5)
+  -- vRP.EXT.Inventory:defineItem("bandage", "bandages", "Used to heal minor wounds.", nil, 0.1)
 
   -- water/food task increase
   local function task_update()

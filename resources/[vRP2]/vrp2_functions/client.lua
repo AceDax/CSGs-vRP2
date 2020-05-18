@@ -50,6 +50,12 @@ function Functions:playScreenEffect(name, duration)
     end
 end
 
+-- stop a screen effect
+-- name, see https://wiki.fivem.net/wiki/Screen_Effects
+function Functions:stopScreenEffect(name)
+  StopScreenEffect(name)
+end
+
 function Functions:playerSpeed(speed)
     self.speed = not self.speed
     self.playerspeed = speed
@@ -105,12 +111,42 @@ function Functions:lockpickVehicle(wait,any)
     end
 end
 
+function Functions:DoAcid()
+  exports["acidtrip"]:DoAcid(600000)
+end
+
+-- shake game play cam
+-- duration: in seconds, if -1, will play until stopShakeGameplayCam is called
+function Functions:startShakeGameplayCam(type, intensity, duration)
+  if duration < 0 then -- loop
+    ShakeGameplayCam(type, intensity)
+  else
+    ShakeGameplayCam(type, intensity)
+
+    Citizen.CreateThread(function() -- force stop the screen effect after duration+1 seconds
+      Citizen.Wait(math.floor((duration+1)*1000))
+      ShakeGameplayCam(type, 0.0)
+    end)
+  end
+end
+
+-- stop shake game play cam
+function Functions:stopShakeGameplayCam(type)
+  ShakeGameplayCam(type, 0.0)
+end
+
 Functions.tunnel = {}
 
 Functions.tunnel.playMovement = Functions.playMovement
 Functions.tunnel.playScreenEffect = Functions.playScreenEffect
+Functions.tunnel.stopScreenEffect = Functions.stopScreenEffect
 Functions.tunnel.playerSpeed = Functions.playerSpeed
 Functions.tunnel.resetMovement = Functions.resetMovement
 Functions.tunnel.lockpickVehicle = Functions.lockpickVehicle
+
+Functions.tunnel.DoAcid = Functions.DoAcid
+
+Functions.tunnel.startShakeGameplayCam = Functions.startShakeGameplayCam
+Functions.tunnel.stopShakeGameplayCam = Functions.stopShakeGameplayCam
 
 vRP:registerExtension(Functions)	
