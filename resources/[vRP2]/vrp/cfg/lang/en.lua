@@ -126,10 +126,16 @@ local lang = {
           prompt = "Group to remove: "
         },
         group_hire = {
-          title = "Hire",
+          title = "PD Hire",
         },
         group_fire = {
-          title = "Fire",
+          title = "PD Fire",
+        },
+        group_hire2 = {
+          title = "FD Hire",
+        },
+        group_fire2 = {
+          title = "FD Fire",
         },
         give_money = {
           title = "Give money",

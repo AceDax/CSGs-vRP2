@@ -38,6 +38,7 @@ cfg.gaptitudes = {
     ["taxi"] = {"Taxi Driver", 0, 1050},
     ["truck"] = {"Truck Driver", 0, 1050},
     ["police"] = {"Law Enforcement", 0, 275},
+    ["ems"] = {"Fire Department", 0, 30},
   },
   ["criminal"] = {
     _title = "Criminal",

@@ -219,6 +219,7 @@ local function menu_admin_users_user(self)
 
     if tuser then
       tuser:addGroup("police")
+      vRP.EXT.Base.remote._notify(user.source, "Character Hired!")
     end
   end
 
@@ -228,6 +229,27 @@ local function menu_admin_users_user(self)
 
     if tuser then
       tuser:removeGroup("police")
+      vRP.EXT.Base.remote._notify(user.source, "Character Fired!")
+    end
+  end
+
+  local function m_ems_hire(menu)
+    local user = menu.user
+    local tuser = vRP.users[menu.data.id]
+
+    if tuser then
+      tuser:addGroup("emergency")
+      vRP.EXT.Base.remote._notify(user.source, "Character Hired!")
+    end
+  end
+
+  local function m_ems_fire(menu)
+    local user = menu.user
+    local tuser = vRP.users[menu.data.id]
+
+    if tuser then
+      tuser:removeGroup("emergency")
+      vRP.EXT.Base.remote._notify(user.source, "Character Fired!")
     end
   end
 
@@ -247,6 +269,26 @@ local function menu_admin_users_user(self)
 
     if tuser then
       tuser:levelDown("job", "police")
+      vRP.EXT.Base.remote._notify(user.source, "Promotion level taken")
+    end
+  end
+
+  local function m_ems_promote(menu)
+    local user = menu.user
+    local tuser = vRP.users[menu.data.id]
+
+    if tuser then
+      tuser:levelUp("job", "ems")
+      vRP.EXT.Base.remote._notify(user.source, "Promotion level given")
+    end
+  end
+
+  local function m_ems_demote(menu)
+    local user = menu.user
+    local tuser = vRP.users[menu.data.id]
+
+    if tuser then
+      tuser:levelDown("job", "ems")
       vRP.EXT.Base.remote._notify(user.source, "Promotion level taken")
     end
   end
@@ -271,11 +313,23 @@ local function menu_admin_users_user(self)
       if user:hasPermission("police.admin") then
         menu:addOption(lang.admin.users.user.group_fire.title(), m_police_fire)
       end
-      if user:hasPermission("police.admin") then
-        menu:addOption("Promote", m_police_promote)
+      if user:hasPermission("ems.admin") then
+        menu:addOption(lang.admin.users.user.group_hire2.title(), m_ems_hire)
+      end
+      if user:hasPermission("ems.admin") then
+        menu:addOption(lang.admin.users.user.group_fire2.title(), m_ems_fire)
       end
       if user:hasPermission("police.admin") then
-        menu:addOption("Demote", m_police_demote)
+        menu:addOption("PD Promote", m_police_promote)
+      end
+      if user:hasPermission("police.admin") then
+        menu:addOption("PD Demote", m_police_demote)
+      end
+      if user:hasPermission("ems.admin") then
+        menu:addOption("FD Promote", m_ems_promote)
+      end
+      if user:hasPermission("ems.admin") then
+        menu:addOption("FD Demote", m_ems_demote)
       end
     end
   end)
