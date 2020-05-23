@@ -19,6 +19,7 @@ function police_init(user)
   vRP.EXT.PlayerState.remote._giveWeapons(user.source,weapons,true)
   vRP.EXT.Police.remote._setCop(user.source,true)
   vRP.EXT.PlayerState.remote._setArmour(user.source,100)
+  vRP.EXT.Functions.remote._onDuty(user.source)
 end
 
 function police_onjoin(user)
@@ -26,14 +27,32 @@ function police_onjoin(user)
 end
 
 function police_onleave(user)
-  vRP.EXT.PlayerState.remote._giveWeapons(user.source,{},true)
+  --vRP.EXT.PlayerState.remote._giveWeapons(user.source,{},true)
   vRP.EXT.Police.remote._setCop(user.source,false)
   vRP.EXT.PlayerState.remote._setArmour(user.source,0)
+  vRP.EXT.Functions.remote._offDuty(user.source)
   user:removeCloak()
 end
 
 function police_onspawn(user)
   police_init(user)
+end
+
+function ems_init(user)
+  vRP.EXT.Functions.remote._onDuty(user.source)
+end
+
+function police_onjoin(user)
+  ems_init(user)
+end
+
+function ems_onleave(user)
+  vRP.EXT.Functions.remote._offDuty(user.source)
+  user:removeCloak()
+end
+
+function ems_onspawn(user)
+  ems_init(user)
 end
 
 cfg.groups = {

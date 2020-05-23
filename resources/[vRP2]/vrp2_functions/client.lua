@@ -135,6 +135,15 @@ function Functions:stopShakeGameplayCam(type)
   ShakeGameplayCam(type, 0.0)
 end
 
+--rp radio exports police on and off duty
+function Functions:onDuty()
+  exports["rp-radio"]:GivePlayerAccessToFrequencies(1, 2, 3, 4)
+end
+
+function Functions:offDuty()
+  exports["rp-radio"]:RemovePlayerAccessToFrequencies(1, 2, 3, 4)
+end
+
 Functions.tunnel = {}
 
 Functions.tunnel.playMovement = Functions.playMovement
@@ -148,5 +157,8 @@ Functions.tunnel.DoAcid = Functions.DoAcid
 
 Functions.tunnel.startShakeGameplayCam = Functions.startShakeGameplayCam
 Functions.tunnel.stopShakeGameplayCam = Functions.stopShakeGameplayCam
+
+Functions.tunnel.onDuty = Functions.onDuty
+Functions.tunnel.offDuty = Functions.offDuty
 
 vRP:registerExtension(Functions)	
