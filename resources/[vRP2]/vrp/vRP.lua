@@ -390,6 +390,7 @@ end
 -- events
 
 function vRP:onPlayerConnecting(source, name, setMessage, deferrals)
+  self:dropPlayer(source) -- checking whitelisted fix
   deferrals.defer()
 
   local ids = GetPlayerIdentifiers(source)
