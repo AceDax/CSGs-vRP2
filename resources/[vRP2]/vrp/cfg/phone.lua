@@ -69,7 +69,7 @@ cfg.services = {
     notify = "~b~You called 911.",
     answer_notify = "~b~A unit is responding please wait."
   },
-  ["taxi/UBER"] = {
+  ["Taxi/UBER"] = {
     map_entity = {"PoI", {blip_id = 161, blip_color = 5}},
     alert_time = 120,
     alert_permission = "taxi.service",
@@ -84,14 +84,6 @@ cfg.services = {
     alert_notify = "~y~Roadside assitance call:~n~~s~",
     notify = "~y~You called Roadside assitance.",
     answer_notify = "~y~Roadside assitance is on the way."
-  },
-  ["Pizza by the Slice"] = {
-    map_entity = {"PoI", {blip_id = 161, blip_color = 5}},
-    alert_time = 120,
-    alert_permission = "pizza.service",
-    alert_notify = "~y~Delivery Order:~n~~s~",
-    notify = "~y~You called for a Pizza Delivery.",
-    answer_notify = "~y~Your Pizza is on the way."
   },
   ["Burgershot"] = {
     map_entity = {"PoI", {blip_id = 161, blip_color = 5}},
@@ -124,7 +116,15 @@ cfg.services = {
     alert_notify = "~y~News alert:~n~~s~",
     notify = "~y~You called Weasel News!",
     answer_notify = "~y~Weasel News is on the way!"
-  }
+  },
+  ["Public Works"] = {
+    map_entity = {"PoI", {blip_id = 161, blip_color = 5}},
+    alert_time = 120,
+    alert_permission = "pw.service",
+    alert_notify = "~y~Public Works alert:~n~~s~",
+    notify = "~y~You called San Andreas Public Works",
+    answer_notify = "~y~San Andreas Public Works is on the way!"
+  },
 }
 
 -- define phone announces
