@@ -118,7 +118,7 @@ function Garage:spawnVehicle(model, state, position, rotation)
     if not position then
       SetPedIntoVehicle(ped,nveh,-1) -- put player inside
     end
-    SetVehicleNumberPlateText(nveh, "P "..vRP.EXT.Identity.registration)
+    SetVehicleNumberPlateText(nveh, vRP.EXT.Identity.registration)
     SetEntityAsMissionEntity(nveh, true, true)
     SetVehicleHasBeenOwnedByPlayer(nveh,true)
 
