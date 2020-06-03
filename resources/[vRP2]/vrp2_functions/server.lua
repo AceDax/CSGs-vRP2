@@ -6,6 +6,8 @@ Luang = module("vrp", "lib/Luang")
 Lang = Luang()
 
 Lang:loadLocale(lcfg.lang, module("vrp", "cfg/lang/"..lcfg.lang) or {})
+
+Lang:loadLocale(lcfg.lang, module("vrp2_functions", "lang/"..lcfg.lang) or {})
 lang = Lang.lang[lcfg.lang]
 
 local Functions = class("Functions", vRP.Extension)
@@ -136,5 +138,175 @@ function Functions:isMechAllowed()
         end
     end	
 end	
+
+--Mobile Police Computer
+local function menu_computer(self)
+
+  local function m_msearchreg(menu)
+    local user = menu.user
+    local reg = user:prompt(lang.police.pc.searchreg.prompt(),"")
+    local cid = vRP.EXT.Identity:getByRegistration(reg)
+    if cid then
+      local identity = vRP.EXT.Identity:getIdentity(cid)
+      if identity then
+        local smenu = user:openMenu("identity", {cid = cid})
+        menu:listen("remove", function(menu) menu.user:closeMenu(smenu) end)
+      else
+        vRP.EXT.Base.remote._notify(user.source,lang.common.not_found())
+      end
+    else
+      vRP.EXT.Base.remote._notify(user.source,lang.common.not_found())
+    end
+  end
+
+  local function m_records(menu)
+    local user = menu.user
+    local reg = user:prompt(lang.police.pc.searchreg.prompt(),"")
+    local tuser
+    local cid = vRP.EXT.Identity:getByRegistration(reg)
+    if cid then tuser = vRP.users_by_cid[cid] end
+    if tuser then
+      -- check vehicle
+      local smenu = user:openMenu("police_pc.records", {tuser = tuser})
+      menu:listen("remove", function(menu) menu.user:closeMenu(smenu) end)
+    else
+      vRP.EXT.Base.remote._notify(user.source,lang.common.not_found())
+    end
+  end
+
+  vRP.EXT.GUI:registerMenuBuilder("computer", function(menu)
+    local user = menu.user
+    menu.title = "Police Computer"
+    menu.css.header_color = "rgba(0,125,255,0.75)"
+      menu:addOption(lang.police.veh_searchreg.title(), m_msearchreg, lang.police.veh_searchreg.description())
+      menu:addOption(lang.police.veh_records.title(), m_records, lang.police.veh_records.description())
+  end)
+
+end
+
+-- police computer while near PV
+local function m_computer(menu)
+    local user = menu.user
+    -- check vehicle
+    local model = vRP.EXT.Garage.remote.getNearestOwnedVehicle(user.source, 7)
+    if model then
+        local menu = user:openMenu("computer")
+        local running = true
+        menu:listen("remove", function(menu)
+            running = false
+        end)
+
+        -- task: close menu if not next to the vehicle
+        Citizen.CreateThread(function()
+            while running do
+                Citizen.Wait(8000)
+                local check_model = vRP.EXT.Garage.remote.getNearestOwnedVehicle(user.source, 7)
+                if model ~= check_model then
+                    user:closeMenu(menu)
+                end
+            end
+        end)
+    else
+        vRP.EXT.Base.remote._notify(user.source, lang.police.connection())
+    end
+end
+
+vRP.EXT.GUI:registerMenuBuilder("police", function(menu)
+    menu:addOption(lang.police.veh_searchtitle.title(), m_computer)
+end)
+
+-- dynamic Fine
+local function m_fine(menu)
+    local user = menu.user
+    local nuser
+    local nplayer = vRP.EXT.Base.remote.getNearestPlayer(user.source, 5)
+
+    if nplayer then
+        nuser = vRP.users_by_source[nplayer]
+    end
+
+    if nuser then
+        local fine = user:prompt(lang.fine.prompt.amount(), "")
+
+        if fine ~= nil and fine ~= "" then
+            local reason = user:prompt(lang.fine.prompt.reason(), "")
+
+            if reason ~= nil and reason ~= "" then
+                    -- if tonumber(fine) > 10000 then
+                    --     fine = 10000
+                    -- end
+
+                    if tonumber(fine) < 0 then
+                        fine = 0
+                    end
+
+                    if fine ~= nil then
+                        nuser:giveDebt(tonumber(fine))
+                        nuser:insertPoliceRecord(lang.police.menu.fine.record({reason,fine}))
+                        vRP.EXT.Base.remote._notify(user.source, lang.police.menu.fine.fined({reason,fine}))
+                        vRP.EXT.Base.remote._notify(nuser.source, lang.police.menu.fine.notify_fined({reason,fine}))
+						
+
+                        user:closeMenu()
+						
+                        -- local text = "**Police Event**\n**Type:** `User was Fined` \n**Officer ID: ** `"..user.id.."`\n**Citizen ID: ** `"..nuser.id.. "`\n**Total Amount:** `$"..fine.."`\n**Offense:** `$"..reason.."` ```ini\n" ..maindate.."```"
+                        
+                        -- setLog(text)
+                    else
+                        vRP.EXT.Base.remote._notify(user.source, lang.common.invalid_value())
+                    end
+                else
+                    vRP.EXT.Base.remote._notify(user.source, lang.common.invalid_value())
+                end
+            else
+                vRP.EXT.Base.remote._notify(user.source, lang.common.invalid_value())
+        end
+    else
+        vRP.EXT.Base.remote._notify(user.source, lang.common.no_player_near())
+    end
+end
+
+function setLog(text)
+	local time = os.date("%d/%m/%Y %X")
+	local name = GetPlayerName(user.source)
+	local identifier = GetPlayerIdentifiers(user.source)
+	local data = time .. ' : ' .. name .. ' - ' .. identifier[1] .. ' : ' .. text
+
+	local content = LoadResourceFile(GetCurrentResourceName(), "log.txt")
+	local newContent = content .. '\r\n' .. data
+	SaveResourceFile(GetCurrentResourceName(), "log.txt", newContent, -1)
+end
+
+function Functions:__construct()
+    vRP.Extension.__construct(self)
+  
+    menu_computer(self)
+
+    -- spawn vehicle
+    local function m_spawnveh(menu)
+        local user = menu.user
+        local model = user:prompt("Vehicle Spawn", "")
+        if model ~= nil and model ~= "" then 
+            self.remote._spawnVehicle(user.source,model)
+        else
+            vRP.EXT.Base.remote._notify(user.source,"Invalid")
+        end
+    end
+
+    vRP.EXT.GUI:registerMenuBuilder("admin", function(menu)
+        local user = menu.user
+        if user:hasPermission("admin.extras") then
+            menu:addOption("Spawn Vehicle", m_spawnveh)          
+        end
+    end)
+
+    --Fines
+    vRP.EXT.GUI:registerMenuBuilder("police", function(menu)
+	    local user = menu.user
+        menu:addOption("Dynamic Fine", m_fine)
+    end)
+end
+
+
 
 vRP:registerExtension(Functions)

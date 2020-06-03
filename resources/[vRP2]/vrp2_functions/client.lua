@@ -111,30 +111,6 @@ function Functions:lockpickVehicle(wait,any)
     end
 end
 
-function Functions:DoAcid()
-  exports["acidtrip"]:DoAcid(600000)
-end
-
--- shake game play cam
--- duration: in seconds, if -1, will play until stopShakeGameplayCam is called
-function Functions:startShakeGameplayCam(type, intensity, duration)
-  if duration < 0 then -- loop
-    ShakeGameplayCam(type, intensity)
-  else
-    ShakeGameplayCam(type, intensity)
-
-    Citizen.CreateThread(function() -- force stop the screen effect after duration+1 seconds
-      Citizen.Wait(math.floor((duration+1)*1000))
-      ShakeGameplayCam(type, 0.0)
-    end)
-  end
-end
-
--- stop shake game play cam
-function Functions:stopShakeGameplayCam(type)
-  ShakeGameplayCam(type, 0.0)
-end
-
 --rp radio exports police on and off duty
 function Functions:onDuty()
   exports["rp-radio"]:GivePlayerAccessToFrequencies(1, 2, 3, 4)
@@ -142,6 +118,160 @@ end
 
 function Functions:offDuty()
   exports["rp-radio"]:RemovePlayerAccessToFrequencies(1, 2, 3, 4)
+end
+
+function Functions:getVehicleInDirection( coordFrom, coordTo )
+  local rayHandle = CastRayPointToPoint( coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, GetPlayerPed( -1 ), 0 )
+  local _, _, _, _, vehicle = GetRaycastResult( rayHandle )
+  return vehicle
+end
+
+function Functions:getNearestVehicle(radius)
+  local x,y,z = table.unpack(GetEntityCoords(GetPlayerPed(-1),true))
+  local ped = GetPlayerPed(-1)
+  if IsPedSittingInAnyVehicle(ped) then
+    return GetVehiclePedIsIn(ped, true)
+  else
+    -- flags used:
+    --- 8192: boat
+    --- 4096: helicos
+    --- 4,2,1: cars (with police)
+
+    local veh = GetClosestVehicle(x+0.0001,y+0.0001,z+0.0001, radius+5.0001, 0, 8192+4096+4+2+1)  -- boats, helicos
+    if not IsEntityAVehicle(veh) then veh = GetClosestVehicle(x+0.0001,y+0.0001,z+0.0001, radius+5.0001, 0, 4+2+1) end -- cars
+    return veh
+  end
+end
+
+function Functions:deleteVehicleInFrontOrInside(offset)
+  local ped = GetPlayerPed(-1)
+  local veh = nil
+  if (IsPedSittingInAnyVehicle(ped)) then 
+    veh = GetVehiclePedIsIn(ped, false)
+  else
+    veh = self:getVehicleInDirection(GetEntityCoords(ped, 1), GetOffsetFromEntityInWorldCoords(ped, 0.0, offset, 0.0))
+  end
+  
+  if IsEntityAVehicle(veh) then
+    SetVehicleHasBeenOwnedByPlayer(veh,false)
+    Citizen.InvokeNative(0xAD738C3085FE7E11, veh, false, true) -- set not as mission entity
+    SetVehicleAsNoLongerNeeded(Citizen.PointerValueIntInitialized(veh))
+    Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(veh))
+    vRP.EXT.Base:notify("Success")
+  else
+    vRP.EXT.Base:notify("Too far")
+  end
+end
+
+function Functions:deleteNearestVehicle(radius)
+  local x,y,z = table.unpack(GetEntityCoords(GetPlayerPed(-1),true))
+  local veh = self:getNearestVehicle(radius)
+  
+  if IsEntityAVehicle(veh) then
+    SetVehicleHasBeenOwnedByPlayer(veh,false)
+    Citizen.InvokeNative(0xAD738C3085FE7E11, veh, false, true) -- set not as mission entity
+    SetVehicleAsNoLongerNeeded(Citizen.PointerValueIntInitialized(veh))
+    Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(veh))
+    vRP.EXT.Base:notify("Success")
+  else
+    vRP.EXT.Base:notify("Too far")
+  end
+end
+
+function Functions:spawnVehicle(model) 
+    local i = 0
+    local mhash = GetHashKey(model)
+    while not HasModelLoaded(mhash) and i < 1000 do
+	  if math.fmod(i,100) == 0 then
+	    vRP.EXT.Base:notify("loading") -- lang.spawnveh.invalid()
+	  end
+      RequestModel(mhash)
+      Citizen.Wait(30)
+	  i = i + 1
+    end
+
+    -- spawn car if model is loaded
+    if HasModelLoaded(mhash) then
+      local x,y,z = vRP.EXT.Base:getPosition()
+      local nveh = CreateVehicle(mhash, x,y,z+0.5, GetEntityHeading(GetPlayerPed(-1)), true, false) -- added player heading
+      SetVehicleOnGroundProperly(nveh)
+      SetEntityInvincible(nveh,false)
+      SetPedIntoVehicle(GetPlayerPed(-1),nveh,-1) -- put player inside
+      Citizen.InvokeNative(0xAD738C3085FE7E11, nveh, true, true) -- set as mission entity
+      SetVehicleHasBeenOwnedByPlayer(nveh,true)
+	  
+	  SetVehicleDoorsLocked(nveh, 1)
+		for i = 1,64 do 
+		SetVehicleDoorsLockedForPlayer(nveh, GetPlayerFromServerId(i), false)
+	end 
+	  
+      SetModelAsNoLongerNeeded(mhash)
+	  vRP.EXT.Base:notify("Success") -- lang.spawnveh.invalid()
+	else
+	  vRP.EXT.Base:notify("invalid") -- lang.spawnveh.invalid()
+	end
+end
+
+function Functions:isPlayerNearModel(model,radius)
+  local x,y,z = table.unpack(GetEntityCoords(GetPlayerPed(-1),true))
+  local v = GetClosestVehicle( x+0.0001, y+0.0001, z+0.0001,radius+0.0001,GetHashKey(model),70)
+  if IsVehicleModel(v, GetHashKey(model)) then
+	  return true
+  else
+    return false
+  end
+end  
+
+function Functions:IsPedInAnyHeli()
+  if IsPedInAnyHeli(GetPlayerPed(-1)) then
+	  return true
+  else
+    return false
+  end
+end
+
+function Functions:IsPedInAnyPlane()
+  if IsPedInAnyPlane(GetPlayerPed(-1)) then
+	  return true
+  else
+    return false
+  end
+end
+
+function Functions:freezePed(flag)
+  FreezeEntityPosition(GetPlayerPed(-1),flag)
+end
+
+function Functions:pedVisiblity(flag)
+  SetEntityVisible(GetPlayerPed(-1),flag)
+end
+
+function Functions:lockPedVehicle(flag)
+  SetVehicleDoorsLocked(GetVehiclePedIsIn(GetPlayerPed(-1),false),flag)
+end
+
+function Functions:freezePedVehicle(flag)
+  FreezeEntityPosition(GetVehiclePedIsIn(GetPlayerPed(-1),false),flag)
+end
+
+function Functions:isPlayerInVehicleModel(model)
+  if (IsVehicleModel(GetVehiclePedIsUsing(GetPlayerPed(-1)), GetHashKey(model))) then -- just a function you can use to see if your player is in a taxi or any other car model (use the tunnel)
+    return true
+  else
+    return false
+  end
+end
+
+function Functions:isInAnyVehicle()
+  if IsPedInAnyVehicle(GetPlayerPed(-1)) then
+	  return true
+  else
+    return false
+  end
+end
+
+function Functions:DoAcid()
+  exports["acidtrip"]:DoAcid(600000)
 end
 
 Functions.tunnel = {}
@@ -152,13 +282,23 @@ Functions.tunnel.stopScreenEffect = Functions.stopScreenEffect
 Functions.tunnel.playerSpeed = Functions.playerSpeed
 Functions.tunnel.resetMovement = Functions.resetMovement
 Functions.tunnel.lockpickVehicle = Functions.lockpickVehicle
-
-Functions.tunnel.DoAcid = Functions.DoAcid
-
-Functions.tunnel.startShakeGameplayCam = Functions.startShakeGameplayCam
-Functions.tunnel.stopShakeGameplayCam = Functions.stopShakeGameplayCam
-
 Functions.tunnel.onDuty = Functions.onDuty
 Functions.tunnel.offDuty = Functions.offDuty
+
+Functions.tunnel.getVehicleInDirection = Functions.getVehicleInDirection
+Functions.tunnel.getNearestVehicle = Functions.getNearestVehicle
+Functions.tunnel.deleteVehicleInFrontOrInside = Functions.deleteVehicleInFrontOrInside
+Functions.tunnel.deleteNearestVehicle = Functions.deleteNearestVehicle
+Functions.tunnel.spawnVehicle = Functions.spawnVehicle
+Functions.tunnel.isPlayerNearModel = Functions.isPlayerNearModel
+Functions.tunnel.IsPedInAnyHeli = Functions.IsPedInAnyHeli
+Functions.tunnel.IsPedInAnyPlane = Functions.IsPedInAnyPlane
+Functions.tunnel.freezePed = Functions.freezePed
+Functions.tunnel.pedVisiblity = Functions.pedVisiblity
+Functions.tunnel.lockPedVehicle = Functions.lockPedVehicle
+Functions.tunnel.freezePedVehicle = Functions.freezePedVehicle
+Functions.tunnel.isPlayerInVehicleModel = Functions.isPlayerInVehicleModel
+Functions.tunnel.isInAnyVehicle = Functions.isInAnyVehicle
+Functions.tunnel.DoAcid = Functions.DoAcid
 
 vRP:registerExtension(Functions)	
