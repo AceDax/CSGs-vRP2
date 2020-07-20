@@ -25,7 +25,6 @@ SpikeConfig.PedList = {
 	"s_m_y_lsseb_01",
 	"s_m_y_swat_01",
 	"s_f_y_swat_01",
-	"Claire_Redfield_LSPD",
 	"s_m_y_ranger_01",
 	"s_f_y_ranger_01",
 	"ig_karen_daniels",
@@ -42,11 +41,7 @@ SpikeConfig.PedList = {
 SpikeConfig.IdentifierRestriction = false
 SpikeConfig.Identifier = "steam" -- [[ license, steam, ip ]] --
 SpikeConfig.IdentifierList = { -- [[ YOU MUST ONLY USE !!! ONE !!! IDENTIFIER YOU CAN CHOOSE BETWEEN THE THREE ABOVE ]]--
-    "steam:110000102b24d08",
-	"steam:110000109e20157",
-	"steam:1100001078762bf",
-	"steam:1100001000432da",
-	"steam:11000010651111b",
+    "steam:110000example",
 }
 
 ---------------------------------------------------------------------------
