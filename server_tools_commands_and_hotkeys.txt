@@ -33,6 +33,18 @@ COMMANDS
 /smokecolour == sets the colour of the smoke (RGB Based, e.g: /smokecolour 255 0 0 = Red smoke)
 /smokesize == Sets the size of the smoke (Floats also work) - Default: 0.3
 /sf == set fireworks launcher
+/prisonalarm == Activates/Deactivates the alarms at the prison.
+/fzalarm == Activates/Deactivates the alarms at Fort Zancudo.
+/pbbalarm == Activates/Deactivates the alarms at Paleto Bay Bank.
+/hlalarm == Activates/Deactivates the alarms at Humane Labs.
+/udalarm == Activates/Deactivates the alarms at the Union Depository.
+/cfalarm == Activates/Deactivates the alarms at Chicken Factory in Paleto.
+/setspikes [#] == sets spike strips # specifies the number of strips to place
+/stretcher == spawn a useable stretcher
+/rstretcher == removes spawn stretcher
+/wheelchair == spawn a useable wheelchair
+/rwheelchair == removes spawned wheelchair
+/tow == tows a car onto a flatbed tow truck
 
 HOTKEYS
 
@@ -43,6 +55,43 @@ F9 == opens vehiocle extra menu
 F10 == opens vehicle Livery menu
 ~ == opens new playerlist (remember to disable the default scoreboard in the server confg)
 Z == toggles plane stunt smoke on and off
+C == Cycle weapon fire modes
+] == toggle emergency vehicle dashcam
+
+FIRE SCRIPT
+/startfire NUMFLAMES RADIUS. NUMFLAMES determines the maximum number of flames the fire will have (maximum 100), while RADIUS specifies the radius of the fire in metres (maximum 30). /startfire 40 10 is a good starting point.
+/stopfire. This stops all fires within a 35 metre radius (you can also extinguish fires normally).
+/stopallfires. This stops all fires on the map.
+/startsmoke SCALE. You're also able to create 'smoke without fire' e.g. for a call where someone gets concerned for fire over barbecue smoke. SCALE is replaced by a number (recommended to keep it between 0.5-5) that indicates the magnitude of the smoke. E.g. /startsmoke 1
+/stopsmoke. Stops all smoke without fire within a 35 metre radius.
+/stopallsmoke. Stops all smoke without fire on the map.
+
+SMART OBSERVATIONS
+
+/setobs - This opens up the menu, allowing you to set your observations.
+/obs - This takes the observations of the nearest player (they must have set their obs for it to work), this will then notify you if their observations change, unless you disable notifications.
+/obsupdates - This will enable or disable observation updates from all players to yourself. If you want to disable just one player, open up their observations menu and press “Disable Notifications”. This will stop tracking.
+
+POLICE HELICOPTER CONTROLS
+
+Press the the E key to switch to the HeliCam
+Whilst in Helicam: move mouse to rotate cam, scroll to zoom and use the RIGHT MOUSE BUTTON to switch between normal, nightvision and thermal vision
+Whilst in Helicam: when hovering over a vehicle and close enough to it, you can see vehicle info. If you can see this, press SPACE to lock camera onto the vehicle. SPACE again to unlock camera.
+Press the X key to rappel from the helicopter
+Press the G key as helicopter pilot to switch on the spotlight (this is synced across the network to all players)
+
+LUX VEHICLE CONTROL SETUP
+
+Q == toggles emergency lights
+E == Airhorn
+R == Rotate siren tone
+Left Ctrl == Aux Siren
+Left Alt == Main siren
+Arrow Keys == toggle turn signals and hazzard lights
+
+EMOTES
+
+Honestly far far far too many commands to list here, main command is /emotemenu however this does not include every possible emote, please read the scripts in [Emotes] for all possible commands
 
 OTHER
 
