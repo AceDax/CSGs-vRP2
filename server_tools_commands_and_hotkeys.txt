@@ -1,0 +1,54 @@
+COMMANDS
+
+/tent == spawns a tent infront of you
+/rtent == removed a tent that you placed
+/chair spawns a camping chair infront of you
+/rchair == removes a chair you placed
+/campfire == spawns a campfire infront of you
+/rcampfire == removed a campfire that you placed
+/carry == allows you to fireman carry another player
+/me (message) == sends the message in local chat in 1st person
+/do (message) == sends the message in local chat in 3rd person
+/ooc (message) == sends the message in local chat with an OOC prefix
+/news (message) == sends the message in gobal chat as a news broadcast
+/help (message) == sends the message as a global OOC request for admin help
+/drop == places the held weapon on the ground
+/alert == used for emergency alert system (read script eas for more details)
+/trunk == opens and closes the trunk of the last vehicle you were in
+/hood == opens and closes the hood of the last vehicle you were in
+/door # == opens and closes the door number (1 through 4) of the last vehicle you were in
+/rwindows == toggles car windows up or down
+/hat == takes off or puts on the last hat you were wearing
+/sg == takes off or puts on the last pair of glasses you were wearing
+/mask == takes off or puts on the last mask you were wearing
+/lights == toggles the interior lights of the vehicle you are in
+/shuff == moves the player from the passanger seat to the drive seat of a car
+/notepad == opens a notepad for the player to take notes on
+/removeplate == removes the license plate of the vehicle you are standing near
+/putplate == puts the license plate back on
+/repair == temporarily restarts a vehicles engine if outside a mechanic zone, fully restores a car if inside a mechanic zone
+/cinematiccam == toggles cinematic mode
+/takehostage == takes the closest player hostage (must have a valid weapon)
+/th == should also take hostage
+/smokecolour == sets the colour of the smoke (RGB Based, e.g: /smokecolour 255 0 0 = Red smoke)
+/smokesize == Sets the size of the smoke (Floats also work) - Default: 0.3
+/sf == set fireworks launcher
+
+HOTKEYS
+
+X == hold for hands up
+U == plays keyfob animation (will be tied to a push to toggle doorlocks int he future)
+HOME == while in a taxi opens the taxi fare meter
+F9 == opens vehiocle extra menu
+F10 == opens vehicle Livery menu
+~ == opens new playerlist (remember to disable the default scoreboard in the server confg)
+Z == toggles plane stunt smoke on and off
+
+OTHER
+
+While ina forklift putting the fork under a car and pressing E will allow you to lift the car
+Holding F while exiting a vehicle will leave the door open
+Holding A or D while exiting a vehicle will leave the wheels turned
+Holding a bladed weapon near a vehicle will prompt for slashing tires
+If Xmas weather is on, pressing E will pick up snowballs
+
