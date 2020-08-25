@@ -365,11 +365,16 @@ function Money.event:characterLoad(user)
   vRP:triggerEvent("playerMoneyUpdate", user)
 end
 
+function Money.event:comma_value(n) -- credit http://richard.warburton.it
+	local left,num,right = string.match(n,'^([^%d]*%d)(%d*)(.-)$')
+	return left..(num:reverse():gsub('(%d%d%d)','%1.'):reverse())..right
+end
+
 function Money.event:playerSpawn(user, first_spawn)
   -- add money display
   if self.cfg.money_display and first_spawn then
-    vRP.EXT.GUI.remote._setDiv(user.source,"money",self.cfg.display_css,lang.money.display({user:getWallet()}))
-	  -- vRP.EXT.GUI.remote._setDiv(user.source,"bmoney",self.cfg.display_css,lang.money.bdisplay({user:getBank()})) ---Bank Money Display
+    vRP.EXT.GUI.remote._setDiv(user.source,"money",self.cfg.display_css,lang.money.display({Money.event:comma_value(user:getWallet())}))
+	vRP.EXT.GUI.remote._setDiv(user.source,"bmoney",self.cfg.display_css,lang.money.display({Money.event:comma_value(user:getBank())})) --Bank display, comment if you don't need this
   end
 end
 
@@ -382,8 +387,8 @@ end
 function Money.event:playerMoneyUpdate(user)
   if self.cfg.money_display then
     -- update money
-    vRP.EXT.GUI.remote._setDivContent(user.source,"money",lang.money.display({user:getWallet()}))
-	  -- vRP.EXT.GUI.remote._setDivContent(user.source,"bmoney",lang.money.bdisplay({user:getBank()})) ---Bank Money Display
+    vRP.EXT.GUI.remote._setDivContent(user.source,"money",lang.money.display({Money.event:comma_value(user:getWallet())}))
+	vRP.EXT.GUI.remote._setDivContent(user.source,"bmoney",lang.money.display({Money.event:comma_value(user:getBank())})) --Bank display, comment if you don't need this
   end
 end
 
